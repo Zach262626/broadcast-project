@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+use App\Events\FileStatus;
 use App\Models\File;
 use Illuminate\Http\Request;
 use ZipArchive;
+
 class FileController extends Controller
 {
     /**
@@ -10,6 +12,8 @@ class FileController extends Controller
      */
     public function show() {
         $files = File::where('user_id', auth()->user()->id)->get();
+        FileStatus::dispatch();
+        event(new FileStatus);
         return view('files.index', ['files' => $files]);
     }
 
