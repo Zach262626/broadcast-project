@@ -1,25 +1,21 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\File;
 use Illuminate\Http\Request;
 use ZipArchive;
-
 class FileController extends Controller
 {
     /**
      * retrieve files.
      */
     public function show() {
-        $files = File::all();
+        $files = File::where('user_id', auth()->user()->id)->get();
         return view('files.index', ['files' => $files]);
     }
 
     public function index() {
         return view('upload');
     }
-
     /**
      * upload files.
      */
@@ -30,20 +26,19 @@ class FileController extends Controller
             File::create([
                 'name' => $file->getClientOriginalName(),
                 'path' => $path,
+                'user_id' => auth()->user()->id,
             ]);
         }
         return back();
     }
-
     /**
      * download files.
      */
     public function download($id)
     {
-        $file = File::find($id);
+        find($id);
         return response()->download(storage_path('app/' . $file->path));
     }
-
     /**
      * download multiple files.
      */
