@@ -13,13 +13,12 @@ use Illuminate\Queue\SerializesModels;
 class FileStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
+    public $file = "blue";
     /**
      * Create a new event instance.
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -29,8 +28,6 @@ class FileStatus implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('test'),
-        ];
+        return new channel('test');
     }
 }
