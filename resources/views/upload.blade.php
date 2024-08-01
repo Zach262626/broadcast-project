@@ -6,5 +6,4 @@
         <h3><a href="/">Home</a><h3>
         <h3><a href="/download">download</a><h3>
     </form>
-    <upload-list></upload-list>
 </x-layout>

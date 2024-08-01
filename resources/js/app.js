@@ -16,8 +16,10 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import UploadListComponent from './components/UploadListComponent.vue';
-app.component('upload-list', UploadListComponent);
+import UploadList from './components/UploadList.vue';
+import DownloadList from './components/DownloadList.vue';
+app.component('upload-list', UploadList);
+app.component('download-list', DownloadList);
 
 /**
  * The following block of code may be used to automatically register your
