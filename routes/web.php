@@ -1,9 +1,11 @@
 <?php
 
+use App\Events\FileStatus;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\SessionController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Events\FileStatus;
+
 
 
 
@@ -11,7 +13,11 @@ use App\Events\FileStatus;
 Route::get('/', function () {
     return view('index');
 });
-
+Route::post('/test', function (Request $request) {
+    $temp = $_POST['text'];
+    FileStatus::dispatch("$temp");
+    return back();
+});
 
 Route::get('/signup', [SessionController::class, 'index']);
 Route::post('/signup', [SessionController::class, 'create']);

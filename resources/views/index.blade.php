@@ -65,4 +65,8 @@
                 @endauth
         </div>
     </main>
+    <form action="/test" method="POST" style="color: black">
+        @csrf
+        <input type="text" name="text" value="text">
+    </form>
 </x-layout>
