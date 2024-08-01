@@ -3,22 +3,22 @@
 
 ## How to install broadcast in laravel 11
 
-1 - php artisan install:broadcasting, click yes to install reverb and node dependencies
-2 - npm install --save-dev laravel-echo pusher-js
-3 - Go inside resources/js/bootstrap.js and make sure echo.js is imported
-4 - edit config/reverb.php and .env
-5 - run in terminal (php artisan reverb:start, npm run dev) to test
+* php artisan install:broadcasting, click yes to install reverb and node dependencies
+* npm install --save-dev laravel-echo pusher-js
+* Go inside resources/js/bootstrap.js and make sure echo.js is imported
+* edit config/reverb.php and .env
+* run in terminal (php artisan reverb:start, npm run dev) to test
 
 ## Make a broadcast channel
 
-1 - To create a broadcast channel, run the command php artisan make:event "Even name"
-2 - Implement ShouldBroadcast to the class
-3 - Change channel name and navigate to channel.php. add authentication, only people with the authenticated will be able to access the channel
+* To create a broadcast channel, run the command php artisan make:event "Even name"
+* Implement ShouldBroadcast to the class
+* Change channel name and navigate to channel.php. add authentication, only people with the authenticated will be able to access the channel
 
 ## Install Vue
 
-1 - composer require laravel/ui
-2 - php artisan ui vue
-3 - add id="app" to div to add vue components
-4 - add new components to resources/js/app.js
-5 - in the layout, add @vite(['resources/js/app.js']) in the header
+* composer require laravel/ui
+* php artisan ui vue
+* add id="app" to div to add vue components
+* add new components to resources/js/app.js
+* in the layout, add @vite(['resources/js/app.js']) in the header
