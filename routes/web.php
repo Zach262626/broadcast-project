@@ -32,3 +32,11 @@ Route::post('/upload', [FileController::class, 'upload']);
 Route::get('/download', [FileController::class, 'show']);
 Route::post('/download-multiple', [FileController::class, 'downloadMultiple']);
 Route::post('/show/files', [FileController::class, 'getFiles']);
+
+Route::get('/chat/{id}', function ($id) {
+    if ($id == auth()->user()->id) {
+        return view('chating.chat1');
+    }else {
+        return redirect('/');
+    }
+});

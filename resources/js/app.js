@@ -18,8 +18,11 @@ const app = createApp({});
 
 import UploadList from './components/UploadList.vue';
 import DownloadList from './components/DownloadList.vue';
+import MessageList from './components/MessageList.vue';
+
 app.component('upload-list', UploadList);
 app.component('download-list', DownloadList);
+app.component('message-list', MessageList);
 
 /**
  * The following block of code may be used to automatically register your
