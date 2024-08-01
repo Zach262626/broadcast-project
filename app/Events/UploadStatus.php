@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class FileStatus implements ShouldBroadcast
+class UploadStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -28,6 +28,6 @@ class FileStatus implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [new Channel('test')];
+        return [new Channel('upload')];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-use App\Events\FileStatus;
+use App\Events\UploadStatus;
 use App\Models\File;
 use Illuminate\Http\Request;
 use ZipArchive;
@@ -16,7 +16,8 @@ class FileController extends Controller
     }
 
     public function index() {
-        return view('upload');
+        $files = File::where('user_id', auth()->user()->id)->get();
+        return view('upload', ['files' => $files]);
     }
     /**
      * upload files.
@@ -24,7 +25,7 @@ class FileController extends Controller
     public function upload(Request $request) {
         foreach ($request->file('files') as $file) {
             sleep(1);
-            FileStatus::dispatch($file->getClientOriginalName());
+            UploadStatus::dispatch($file->getClientOriginalName());
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             File::create([
@@ -63,5 +64,16 @@ class FileController extends Controller
         $zip->close();
         return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
         }
+    }
+    /**
+     * Get all users files.
+     */
+    public function getFiles(Request $request) {
+        $files = File::where('user_id', auth()->user()->id)->latest()->get();
+        $names = [];
+        foreach ($files as $key => $item) {
+            $names[$item->id] = $item->name;
+        }
+        return $names;
     }
 }
