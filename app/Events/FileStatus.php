@@ -28,6 +28,6 @@ class FileStatus implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return new channel('test');
+        return [new Channel('test')];
     }
 }

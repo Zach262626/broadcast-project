@@ -11,7 +11,12 @@ use App\Events\FileStatus;
 Route::get('/', function () {
     return view('index');
 });
-
+Route::get('/test', function () {
+    $temp = User::first();
+    FileStatus::dispatch(User::first());
+    event(new FileStatus($temp));
+    return $temp;
+});
 
 Route::get('/signup', [SessionController::class, 'index']);
 Route::post('/signup', [SessionController::class, 'create']);
