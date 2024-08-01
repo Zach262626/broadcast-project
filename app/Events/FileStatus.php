@@ -13,11 +13,11 @@ use Illuminate\Queue\SerializesModels;
 class FileStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $file = "blue";
+
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public $file)
     {
     }
 

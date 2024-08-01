@@ -12,8 +12,6 @@ class FileController extends Controller
      */
     public function show() {
         $files = File::where('user_id', auth()->user()->id)->get();
-        FileStatus::dispatch();
-        event(new FileStatus);
         return view('files.index', ['files' => $files]);
     }
 
@@ -25,6 +23,8 @@ class FileController extends Controller
      */
     public function upload(Request $request) {
         foreach ($request->file('files') as $file) {
+            sleep(1);
+            FileStatus::dispatch($file->getClientOriginalName());
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             File::create([
