@@ -31,9 +31,9 @@
                     </footer>
                     @auth
                     <hr>
-                    <upload-list></upload-list>
+                    <upload-list :user_id="{{ auth()->user()->id }}"></upload-list>
                     <hr>
-                    <download-list></download-list>
+                    <download-list :user_id="{{ auth()->user()->id }}"></download-list>
                     @endauth
                 </div>
             </div>

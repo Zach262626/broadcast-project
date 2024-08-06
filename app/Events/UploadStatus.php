@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -13,11 +14,10 @@ use Illuminate\Queue\SerializesModels;
 class UploadStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
     /**
      * Create a new event instance.
      */
-    public function __construct(public $file)
+    public function __construct(public $file, public $userId)
     {
     }
 
@@ -28,6 +28,8 @@ class UploadStatus implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [new Channel('upload')];
+        return [new PrivateChannel("App.Models.User.{$this->userId}")];
     }
+
+
 }
