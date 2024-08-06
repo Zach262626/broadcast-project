@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Events\UploadStatus;
 use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use ZipArchive;
 
 class FileController extends Controller
@@ -24,8 +25,6 @@ class FileController extends Controller
      */
     public function upload(Request $request) {
         foreach ($request->file('files') as $file) {
-            sleep(1);
-            UploadStatus::dispatch($file->getClientOriginalName());
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             File::create([
@@ -33,6 +32,7 @@ class FileController extends Controller
                 'path' => $path,
                 'user_id' => auth()->user()->id,
             ]);
+            UploadStatus::dispatch($file->getClientOriginalName(), Auth::id());
         }
         return back();
     }
