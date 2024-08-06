@@ -24,7 +24,14 @@ class FileController extends Controller
      * upload files.
      */
     public function upload(Request $request) {
+        $status = 0;
+        $count = 0;
+        $total = count($request->file('files'));
         foreach ($request->file('files') as $file) {
+            $count += 1;
+            $status = (($count / $total) * 100);
+            UploadStatus::dispatch($file->getClientOriginalName(), $status, Auth::id());
+            sleep(3);
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             File::create([
@@ -32,7 +39,6 @@ class FileController extends Controller
                 'path' => $path,
                 'user_id' => auth()->user()->id,
             ]);
-            UploadStatus::dispatch($file->getClientOriginalName(), Auth::id());
         }
         return back();
     }

@@ -17,7 +17,7 @@ class UploadStatus implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public $file, public $userId)
+    public function __construct(public $file, public $status, public $userId)
     {
     }
 
