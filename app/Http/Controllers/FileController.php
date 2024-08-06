@@ -11,12 +11,12 @@ class FileController extends Controller
     /**
      * retrieve files.
      */
-    public function show() {
+    public function downloadIndex() {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('files.index', ['files' => $files]);
     }
 
-    public function index() {
+    public function uploadIndex() {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('upload', ['files' => $files]);
     }
@@ -24,7 +24,14 @@ class FileController extends Controller
      * upload files.
      */
     public function upload(Request $request) {
+        $status = 0;
+        $count = 0;
+        $total = count($request->file('files'));
         foreach ($request->file('files') as $file) {
+            $count += 1;
+            $status = (($count / $total) * 100);
+            UploadStatus::dispatch($file->getClientOriginalName(), $status, Auth::id());
+            sleep(3);
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             File::create([
@@ -32,7 +39,6 @@ class FileController extends Controller
                 'path' => $path,
                 'user_id' => auth()->user()->id,
             ]);
-            UploadStatus::dispatch($file->getClientOriginalName(), Auth::id());
         }
         return back();
     }
@@ -75,5 +81,10 @@ class FileController extends Controller
             $names[$item->id] = $item->name;
         }
         return $names;
+    }
+    public function deleteFiles(Request $request) {
+        //File::where('user_id', auth()->user()->id)->delete();
+        find(auth()->user()->id);
+        return response()->delete();
     }
 }

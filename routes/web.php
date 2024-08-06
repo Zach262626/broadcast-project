@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::post('/test', function (Request $request) {
-    $temp = $_POST['text'];
-    UploadStatus::dispatch('$temp', Auth::id());
-    return back();
-});
+// Route::post('/test', function (Request $request) {
+//     $temp = $_POST['text'];
+//     UploadStatus::dispatch('$temp', Auth::id());
+//     return back();
+// });
 
 Route::get('/signup', [SessionController::class, 'index']);
 Route::post('/signup', [SessionController::class, 'create']);
@@ -28,9 +28,9 @@ Route::get('/logout', [SessionController::class, 'destroy']);
 Route::get('/login', [SessionController::class, 'login']);
 Route::post('/login', [SessionController::class, 'store']);
 
-Route::get('/upload',[FileController::class, 'index']);
+Route::get('/upload',[FileController::class, 'uploadIndex']);
 Route::post('/upload', [FileController::class, 'upload']);
-Route::get('/download', [FileController::class, 'show']);
+Route::get('/download', [FileController::class, 'downloadIndex']);
 Route::post('/download-multiple', [FileController::class, 'downloadMultiple']);
 Route::post('/show/files', [FileController::class, 'getFiles']);
 
