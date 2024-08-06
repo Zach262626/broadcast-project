@@ -11,12 +11,12 @@ class FileController extends Controller
     /**
      * retrieve files.
      */
-    public function show() {
+    public function downloadIndex() {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('files.index', ['files' => $files]);
     }
 
-    public function index() {
+    public function uploadIndex() {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('upload', ['files' => $files]);
     }
@@ -81,5 +81,10 @@ class FileController extends Controller
             $names[$item->id] = $item->name;
         }
         return $names;
+    }
+    public function deleteFiles(Request $request) {
+        //File::where('user_id', auth()->user()->id)->delete();
+        find(auth()->user()->id);
+        return response()->delete();
     }
 }
