@@ -1,10 +1,10 @@
 <x-layout>
-    <div style="color: black;">
+    <div>
         <form method="POST" action="/login">
             @csrf
             <input type="text" name="username" id="username">
-            <button type="submit">login</button>
+            <button class="btn btn-dark border" type="submit">login</button>
         </form>
-        <h3><a href="/">Home</a><h3>
+        <a type="button" class="btn btn-dark border mt-1" href="/">Home</a>
     </div>
 </x-layout>

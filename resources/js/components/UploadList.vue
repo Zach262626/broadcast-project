@@ -1,11 +1,11 @@
 <template>
     <div style="width:100%; display: inline-block;padding: 5px; overflow:scroll; height:200px;">
         <h1>Uploaded Progress</h1>  
-            <div style="border: solid white 1px">
+            <div style="border: solid black 1px">
                 <div class="progress-bar"></div>
             </div> 
             <ul>
-                <li v-for="(item, index) in files_added" class="card-body">
+                <li v-for="(item, index) in files_added" class="">
                     + {{ item }} 
                 </li>
             </ul>
@@ -36,6 +36,6 @@
 .progress-bar {
     height:24px;
     width: v-bind(progress + "%"); 
-    background: white
+    background: black
 }
 </style>
