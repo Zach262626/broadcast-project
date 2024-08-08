@@ -15,7 +15,7 @@
 * npm install --save-dev laravel-echo pusher-js
 * Go inside resources/js/bootstrap.js and make sure echo.js is imported
 * edit config/reverb.php and .env
-* run in terminal (php artisan reverb:start, npm run dev) to test
+* run in terminal (php artisan reverb:start,php artisan queue:work, npm run dev) to test
 
 ## Make a broadcast channel
 

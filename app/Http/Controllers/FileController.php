@@ -54,11 +54,14 @@ class FileController extends Controller
      */
     public function downloadMultiple(Request $request)
     {   
+        if (!file_exists(storage_path('app/downloads/'))) {
+            mkdir(storage_path('app/downloads/'));
+        }
         $files_requested = $request['files'];
         $files = File::whereIn('id', $files_requested)->get();
         $zip = new ZipArchive;
         $zipFileName =  'Attachment-' . 'files'. '.zip';
-        if ($zip->open(public_path($zipFileName), ZipArchive::CREATE) === true) {
+        if ($zip->open(storage_path('app/downloads/' . $zipFileName), ZipArchive::CREATE) === true) {
         foreach ($files as $file) {
             $filePath = storage_path($file->path);
             $filesToZip[] = $filePath;
@@ -67,7 +70,7 @@ class FileController extends Controller
             $zip->addFile($file, basename('/app' . $file));
         }
         $zip->close();
-        DownloadStatus::dispatch($zipFileName, public_path($zipFileName), Auth::id());
+        DownloadStatus::dispatch($zipFileName, storage_path('app/downloads/' . $zipFileName), Auth::id());
         return "File are zipped";
         }
     }
