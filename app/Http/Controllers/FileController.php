@@ -58,7 +58,7 @@ class FileController extends Controller
         $files = File::whereIn('id', $files_requested)->get();
         $zip = new ZipArchive;
         $zipFileName =  'Attachment-' . 'files'. '.zip';
-        if ($zip->open(public_path('storage/' . $zipFileName), ZipArchive::CREATE) === true) {
+        if ($zip->open(public_path('downloads/' . $zipFileName), ZipArchive::CREATE) === true) {
         foreach ($files as $file) {
             $filePath = storage_path($file->path);
             $filesToZip[] = $filePath;
@@ -67,7 +67,7 @@ class FileController extends Controller
             $zip->addFile($file, basename('/app' . $file));
         }
         $zip->close();
-        DownloadStatus::dispatch($zipFileName, public_path('storage/' . $zipFileName), Auth::id());
+        DownloadStatus::dispatch($zipFileName, public_path('downloads/' . $zipFileName), Auth::id());
         return "File are zipped";
         }
     }
