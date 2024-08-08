@@ -1,20 +1,20 @@
 <x-layout>
 
         @auth
-        Logged in: {{ auth()->user()->name  }}
+        <h3>Logged in: <strong>{{ auth()->user()->name  }}</strong></h3>
         <section class="container">
-            <div class="row">
-                <div class="col-4">
-                    <a href="/logout" type="button" class="btn btn-light">
+            <div class="row mt-3">
+                <div class="col-lg-4 col-md-6 my-1">
+                    <a href="/logout" type="button" class="btn btn-light w-100">
                         <h2 class="">Logout</h2></a>
                 </div>
-                <div class="col-4 ">
-                    <a href="/upload" type="button" class="btn btn-light">
+                <div class="col-lg-4 col-md-6 my-1">
+                    <a href="/upload" type="button" class="btn btn-light w-100">
                         <h2 class="">Upload Files</h2>
                     </a>
                 </div>
-                <div class="col-4">
-                    <a  href="/download" type="button" class="btn btn-light">
+                <div class="col-lg-4 my-1">
+                    <a  href="/download" type="button" class="btn btn-light w-100">
                         <h2 class="">Download Files</h2></a>
                 </div>
             </div>
