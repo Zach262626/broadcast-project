@@ -1,6 +1,14 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
+## How to install Project
+
+* Clone Project
+* copy env.example add a empty local database
+* run npm install and composer install
+* run the migration table
+
+
 ## How to install broadcast in laravel 11
 
 * php artisan install:broadcasting, click yes to install reverb and node dependencies
