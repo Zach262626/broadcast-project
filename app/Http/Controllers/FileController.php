@@ -25,7 +25,6 @@ class FileController extends Controller
      * upload files.
      */
     public function upload(Request $request) {
-        dd(storage_path(), public_path());
         $status = 0;
         $count = 0;
         $total = count($request->file('files'));
@@ -55,6 +54,9 @@ class FileController extends Controller
      */
     public function downloadMultiple(Request $request)
     {   
+        if (!file_exists(storage_path('app/downloads/'))) {
+            mkdir(storage_path('app/downloads/'));
+        }
         $files_requested = $request['files'];
         $files = File::whereIn('id', $files_requested)->get();
         $zip = new ZipArchive;
