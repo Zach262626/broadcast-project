@@ -11,14 +11,16 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UploadStatus implements ShouldBroadcast
+class DownloadStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public $file, public $status, public $userId)
+    public function __construct(public $filename, public $path, public $userId)
     {
+        //
     }
 
     /**
@@ -29,9 +31,7 @@ class UploadStatus implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("Upload.User.{$this->userId}"),
+            new PrivateChannel("Download.User.{$this->userId}"),
         ];
     }
-
-
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\UploadStatus;
+use App\Events\DownloadStatus;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\SessionController;
 use App\Models\File;
@@ -29,11 +30,12 @@ Route::get('/login', [SessionController::class, 'login']);
 Route::post('/login', [SessionController::class, 'store']);
 
 Route::get('/upload',[FileController::class, 'uploadIndex']);
-Route::post('/upload', [FileController::class, 'upload']);
+Route::post('/upload', [FileController::class, 'upload'])->name('upload-files');
 Route::get('/download', [FileController::class, 'downloadIndex']);
-Route::post('/download-multiple', [FileController::class, 'downloadMultiple']);
+Route::post('/download', [FileController::class, 'download'])->name('download');
+Route::post('/download-multiple', [FileController::class, 'downloadMultiple'])->name('download-multiple');
 Route::post('/show/files', [FileController::class, 'getFiles']);
 
 Route::get('/auth/user', function () {
     return Auth::user();
-});
+})->name('getUser');
