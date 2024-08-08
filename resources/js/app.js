@@ -16,12 +16,12 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import UploadList from './components/UploadList.vue';
-import DownloadList from './components/DownloadList.vue';
+
 import UploadAlert from './components/UploadAlert.vue';
-app.component('upload-list', UploadList);
-app.component('download-list', DownloadList);
+import DownloadAlert from './components/DownloadAlert.vue';
+
 app.component('upload-alert', UploadAlert);
+app.component('download-alert', DownloadAlert);
 
 /**
  * The following block of code may be used to automatically register your

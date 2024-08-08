@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Events\DownloadStatus;
 use App\Events\UploadStatus;
 use App\Models\File;
 use Illuminate\Http\Request;
@@ -42,12 +43,11 @@ class FileController extends Controller
         return back();
     }
     /**
-     * download files.
+     * download files at path.
      */
-    public function download($id)
+    public function download(Request $request)
     {
-        find($id);
-        return response()->download(storage_path('app/' . $file->path));
+        return response()->download($request['path'])->deleteFileAfterSend(true);;
     }
     /**
      * download multiple files.
@@ -67,7 +67,8 @@ class FileController extends Controller
             $zip->addFile($file, basename('/app' . $file));
         }
         $zip->close();
-        return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+        DownloadStatus::dispatch($zipFileName, public_path($zipFileName), Auth::id());
+        return "File are zipped";
         }
     }
     /**
