@@ -17,16 +17,17 @@ class SessionController extends Controller
     }
 
     public function create(Request $request) {
-        $atr = [
-            'name' => $request['username'],
-            'email' => Str::random(10),
-            'password' => Str::random(10),
-        ];
-        //create the user
-        $user = User::create($atr);
-        //log in
-        Auth::login($user);
-        //redirect
+        $user = User::where('name', $request['username'])->get();
+        if (count($user)==0) {
+            $atr = [
+                'name' => $request['username'],
+            ];
+            //create the user
+            $user = User::create($atr);
+            //log in
+            Auth::login($user);
+        }
+            //redirect
         return redirect('/');
     }
     public function store(Request $request) {
