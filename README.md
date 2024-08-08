@@ -7,6 +7,7 @@
 * copy env.example add a empty local database
 * run npm install and composer install
 * run the migration table
+* run php artisan reverb:start, php artisan queue:work, npm run dev
 
 
 ## How to install broadcast in laravel 11
