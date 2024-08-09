@@ -39,14 +39,21 @@
         @csrf
         <input type="text" name="text" value="text">
     </form> --}}
-</x-layout>
-@auth
-<div class="container" id="log"> 
-    <div class="mt-5 p-4 border border-3">
-        <log-body 
-        user_id = "{{ auth()->user()->id }}"
-        _token = "{{ csrf_token() }}"
-        ></log-body>
+    @auth
+    <div class="container mt-5" id="log"> 
+        <div class="px-4 border border-3">
+            <div class="d-flex align-items-center justify-content-center py-2 border-bottom border-white">Logs</div>
+            <div style="height: 300px;" class="overflow-auto">
+                <div class="h-100">
+                    <log-body
+                    user_id = "{{ auth()->user()->id }}"
+                    _token = "{{ csrf_token() }}"
+                    old_log_route = "{{ route('update-file-log') }}"
+                    new_log_route = "{{ route('old-logs') }}"
+                    ></log-body>
+                </div>
+            </div>
+        <div>
     </div>
-</div>
-@endauth
+    @endauth
+</x-layout>

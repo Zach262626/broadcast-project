@@ -11,5 +11,5 @@ class FileLog extends Model
 {
     use HasFactory;
     protected $table = 'files_log';
-    protected $fillable = ['name', 'description', 'type'];
+    protected $fillable = ['name', 'description', 'type', 'user_id', 'created_at'];
 }

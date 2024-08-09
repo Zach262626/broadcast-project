@@ -1,40 +1,36 @@
-<script>
-import { ref } from 'vue'
-export default {
-  props: ['user_id'],
-  setup(props) {
-    const filename = ref("")
-    const filepath = ref("");
-    const show = ref(false);
-    const user_id = ref(props.user_id)
-    return {
-      filename, filepath, show, user_id
-    }
-  },
-  methods: {
-    showAlert() {
-      var toast = new bootstrap.Toast(document.getElementById('download-alert'));
-      toast.show();
-      changeView(true);
-    },
-    changeView(choice) {
-      if (choice) {
-        show.value = true;
-      }else {
-        show.value = false;
-      }
-    }
-  },
-  mounted() {
-    Echo.private('Download.User.' + this.user_id.value)
+
+<script setup>
+import { onMounted, ref } from 'vue'
+const props = defineProps(['user_id'])
+const filename = ref("")
+const filepath = ref("");
+const show = ref(false);
+
+function showAlert() {
+    var toast = new bootstrap.Toast(document.getElementById('download-alert'));
+    toast.show();
+    changeView(true);
+}
+function changeView(choice) {
+  if (choice) {
+    show.value = true;
+  }else {
+    show.value = false;
+  }
+}
+
+
+onMounted(() => {
+    Echo.private('Download.User.' + props.user_id)
         .listen('DownloadStatus', (e) => {
           console.log(e);
             filename.value = e.filename;
             filepath.value = e.path;
             showAlert();
-        })
-  }
-}
+        });
+});
+
+
 </script>
 
 <template>
@@ -45,10 +41,7 @@ export default {
       </div>
       <div class="toast-body">
         <input type='hidden' :value="filepath" name='path' id='path'>
-        <input type='hidden' :value="filename" name='name' id='name'>
         <button class="btn btn-light border" data-bs-dismiss="toast" @click="changeView(false)" type="submit">{{ filename }}</button>
       </div>
     </div>
 </template>
-
-  

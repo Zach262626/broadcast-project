@@ -101,14 +101,15 @@ class FileController extends Controller
             'name' => $request["name"],
             'description' => $request["description"],
             'type' => $request["type"],
+            'user_id' => Auth::id(),
         ]);
         return;
     }
-     /**
+    /**
      * Logging File.
      */
     public function getLogFiles(Request $request)
     {
-        return FileLog::where('id', $request['user_id'])->get();
+        return FileLog::where('user_id', Auth::id())->get();
     }
 }
