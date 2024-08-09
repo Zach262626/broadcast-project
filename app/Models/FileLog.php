@@ -11,10 +11,5 @@ class FileLog extends Model
 {
     use HasFactory;
     protected $table = 'files_log';
-    protected $fillable = ['file_id', 'name', 'description', 'type'];
-
-    public function file()
-    {
-        return $this->belongsTo(File::class);
-    }
+    protected $fillable = ['name', 'description', 'type'];
 }

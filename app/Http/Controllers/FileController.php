@@ -95,14 +95,20 @@ class FileController extends Controller
     /**
      * Logging File.
      */
-    public function logFiles($file_id, $name, $description, $type)
+    public function logFiles(Request $request)
     {
         FileLog::create([
-            'file_id' => $file_id,
-            'name' => $name,
-            'description' => $description,
-            'type' => $type,
+            'name' => $request["name"],
+            'description' => $request["description"],
+            'type' => $request["type"],
         ]);
         return;
+    }
+     /**
+     * Logging File.
+     */
+    public function getLogFiles(Request $request)
+    {
+        return FileLog::where('id', $request['user_id'])->get();
     }
 }

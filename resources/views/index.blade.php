@@ -40,8 +40,13 @@
         <input type="text" name="text" value="text">
     </form> --}}
 </x-layout>
+@auth
 <div class="container" id="log"> 
     <div class="mt-5 p-4 border border-3">
-        <log-body></log-body>
+        <log-body 
+        user_id = "{{ auth()->user()->id }}"
+        _token = "{{ csrf_token() }}"
+        ></log-body>
     </div>
 </div>
+@endauth

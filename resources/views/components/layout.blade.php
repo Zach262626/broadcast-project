@@ -35,8 +35,8 @@
             <div class="toast-container mt-5">
                 <upload-alert user_id="{{ auth()->user()->id }}"></upload-alert>
                 <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
-                    <download-alert user_id="{{ auth()->user()->id }}"></download-alert>
                     @csrf
+                    <download-alert user_id="{{ auth()->user()->id }}"></download-alert>
                 </form>
             </div>
             @endauth
