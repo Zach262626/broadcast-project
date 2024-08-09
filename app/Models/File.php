@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\FileLog;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class File extends Model
 {
@@ -14,5 +15,9 @@ class File extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function fileLogs() {
+        return $this->hasMany(FileLog::class);
     }
 }

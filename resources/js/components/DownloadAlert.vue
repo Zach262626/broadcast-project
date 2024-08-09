@@ -41,6 +41,7 @@ onMounted(() => {
       </div>
       <div class="toast-body">
         <input type='hidden' :value="filepath" name='path' id='path'>
+        <input type='hidden' :value="filename" name='name' id='name'>
         <button class="btn btn-light border" data-bs-dismiss="toast" @click="changeView(false)" type="submit">{{ filename }}</button>
       </div>
     </div>

@@ -15,13 +15,17 @@ import { createApp } from 'vue';
  */
 
 const app = createApp({});
+const log = createApp({});
 
 
 import UploadAlert from './components/UploadAlert.vue';
 import DownloadAlert from './components/DownloadAlert.vue';
+import LogBody from './components/LogBody.vue';
 
 app.component('upload-alert', UploadAlert);
 app.component('download-alert', DownloadAlert);
+
+log.component('log-body', LogBody);
 
 /**
  * The following block of code may be used to automatically register your
@@ -42,3 +46,4 @@ app.component('download-alert', DownloadAlert);
  */
 
 app.mount('#app');
+log.mount('#log');

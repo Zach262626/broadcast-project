@@ -34,7 +34,7 @@ Route::post('/upload', [FileController::class, 'upload'])->name('upload-files');
 Route::get('/download', [FileController::class, 'downloadIndex']);
 Route::post('/download', [FileController::class, 'download'])->name('download');
 Route::post('/download-multiple', [FileController::class, 'downloadMultiple'])->name('download-multiple');
-Route::post('/show/files', [FileController::class, 'getFiles']);
+Route::post('/show/files', [FileController::class, 'getFilesNames']);
 
 Route::get('/auth/user', function () {
     return Auth::user();

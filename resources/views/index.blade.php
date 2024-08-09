@@ -40,3 +40,8 @@
         <input type="text" name="text" value="text">
     </form> --}}
 </x-layout>
+<div class="container" id="log"> 
+    <div class="mt-5 p-4 border border-3">
+        <log-body></log-body>
+    </div>
+</div>
