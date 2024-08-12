@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Events\DownloadStatus;
 use App\Events\UploadStatus;
 use App\Models\File;
+use App\Models\FileLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use ZipArchive;
@@ -50,7 +51,7 @@ class FileController extends Controller
             sleep(1);
             $path = $file->store('uploads');
             $path = 'app/' . $path;
-            File::create([
+            $file_created = File::create([
                 'name' => $file->getClientOriginalName(),
                 'path' => $path,
                 'user_id' => auth()->user()->id,
@@ -102,7 +103,7 @@ class FileController extends Controller
      * @param Request $request
      * @return array $name
      */
-    public function getFiles(Request $request)
+    public function getFilesNames(Request $request)
     {
         $files = File::where('user_id', auth()->user()->id)->latest()->get();
         $names = [];
@@ -110,5 +111,25 @@ class FileController extends Controller
             $names[$item->id] = $item->name;
         }
         return $names;
+    }
+    /**
+     * Logging File.
+     */
+    public function logFiles(Request $request)
+    {
+        FileLog::create([
+            'name' => $request["name"],
+            'description' => $request["description"],
+            'type' => $request["type"],
+            'user_id' => Auth::id(),
+        ]);
+        return;
+    }
+    /**
+     * Logging File.
+     */
+    public function getLogFiles(Request $request)
+    {
+        return FileLog::where('user_id', Auth::id())->get();
     }
 }

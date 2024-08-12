@@ -26,7 +26,9 @@ Route::post('/upload', [FileController::class, 'upload'])->name('upload-files');
 Route::get('/download', [FileController::class, 'downloadIndex']);
 Route::post('/download', [FileController::class, 'download'])->name('download');
 Route::post('/download-multiple', [FileController::class, 'downloadMultiple'])->name('download-multiple');
-Route::post('/show/files', [FileController::class, 'getFiles']);
+Route::post('/show/files', [FileController::class, 'getFilesNames']);
+Route::post('/files/log', [FileController::class, 'logFiles'])->name('update-file-log');
+Route::get('/files/log', [FileController::class, 'getLogFiles'])->name('old-logs');
 
 Route::get('/auth/user', function () {
     return Auth::user();

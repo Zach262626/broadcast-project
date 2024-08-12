@@ -21,11 +21,11 @@ return new class extends Migration
         });
         Schema::create('files_log', function (Blueprint $table) {
             $table->id();
-            $table->integer('file_id')->unsigned();
             $table->string('name');
             $table->string('description');
             $table->string('type');
-            $table->foreign('file_id')->references('id')->on('files');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
