@@ -7,13 +7,12 @@ use App\Jobs\CounterJob;
 use App\Models\Counter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Bus;
 
 class CounterController extends Controller
 {
     /**
      * Count to max number
-     * 
+     *
      * @param Request $request
      * @return array
      */
@@ -25,7 +24,7 @@ class CounterController extends Controller
     }
     /**
      * Get all the number counted
-     * 
+     *
      * @param Request $request
      * @return array
      */
@@ -35,12 +34,24 @@ class CounterController extends Controller
     }
     /**
      * Get latest number counted
-     * 
+     *
      * @param Request $request
      * @return array
      */
     public function getLatestCounter(Request $request)
     {
         return Counter::where("user_id", Auth::id())->latest()->first();
+    }
+    /**
+     * Delete Counter in database
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function deleteCounter(Request $request)
+    {
+        Counter::where("user_id", $request["user_id"])->delete();
+        broadcast(new CounterStatus(0, 0, $request["user_id"]));
+        return true;
     }
 }

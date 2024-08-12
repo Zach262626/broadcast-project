@@ -30,6 +30,12 @@
     <div class="container" id="app">
         @auth
             <div class="toast-container top-0 end-0 position-absolute">
+                <counter-alert 
+                    user_id="{{ auth()->user()->id }}" 
+                    _token = "{{ csrf_token() }}"
+                    delete_counter = "{{ route('delete_counter') }}"
+                    counter_status_route = "{{ route('counter_status_route') }}">
+                </counter-alert>
                 <upload-alert user_id="{{ auth()->user()->id }}"></upload-alert>
                 <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -41,13 +47,11 @@
             {{ $slot }}
         </main>
         @auth
-        <counter-component 
-            user_id="{{ auth()->user()->id }}"
-            _token = "{{ csrf_token() }}"
-            counter_status_route = "{{ route('counter_status_route') }}"
-            start_counter = "{{ route('start_counter') }}"
-        ></counter-component>
+            <counter-component user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
+                counter_status_route = "{{ route('counter_status_route') }}"
+                start_counter = "{{ route('start_counter') }}"></counter-component>
         @endauth
     </div>
 </body>
+
 </html>
