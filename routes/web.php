@@ -32,7 +32,9 @@ Route::post('/show/files', [FileController::class, 'getFilesNames']);
 Route::post('/files/log', [FileController::class, 'logFiles'])->name('update-file-log');
 Route::get('/files/log', [FileController::class, 'getLogFiles'])->name('old-logs');
 
-Route::post('/count/start', [CounterController::class, 'startCounter'])->name('start-counter');
+
+Route::post('/count/start', [CounterController::class, 'startCounter'])->name('start_counter');
+Route::get('/count/status', [CounterController::class, 'getLatestCounter'])->name('counter_status_route');
 
 Route::get('/auth/user', function () {
     return Auth::user();

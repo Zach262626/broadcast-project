@@ -21,7 +21,7 @@ class CounterController extends Controller
     {
         $max = 10;
         CounterJob::dispatch(1, $max, Auth::id());
-        return back();
+        return 0;
     }
     /**
      * Get all the number counted
@@ -41,6 +41,6 @@ class CounterController extends Controller
      */
     public function getLatestCounter(Request $request)
     {
-        return Counter::where(Auth::id())->latest()->first();
+        return Counter::where("user_id", Auth::id())->latest()->first();
     }
 }

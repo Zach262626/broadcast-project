@@ -41,10 +41,12 @@
             {{ $slot }}
         </main>
         @auth
-        <form action="{{ route('start-counter') }}" method="POST">
-            @csrf
-            <counter-component user_id="{{ auth()->user()->id }}"></counter-component>
-        </form>
+        <counter-component 
+            user_id="{{ auth()->user()->id }}"
+            _token = "{{ csrf_token() }}"
+            counter_status_route = "{{ route('counter_status_route') }}"
+            start_counter = "{{ route('start_counter') }}"
+        ></counter-component>
         @endauth
     </div>
 </body>
