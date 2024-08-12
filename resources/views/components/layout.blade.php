@@ -27,12 +27,8 @@
     
     <body class="bg-dark text-white">
         <div class="container" id="app">
-            <main class="mt-5 p-4 border border-3">
-                {{ $slot }}
-            </main>
-            @auth
-                    
-            <div class="toast-container mt-5">
+            @auth                 
+            <div class="toast-container top-0 end-0 position-absolute">
                 <upload-alert user_id="{{ auth()->user()->id }}"></upload-alert>
                 <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
                     <download-alert user_id="{{ auth()->user()->id }}"></download-alert>
@@ -40,6 +36,9 @@
                 </form>
             </div>
             @endauth
+            <main class="mt-5 p-4 border border-3">
+                {{ $slot }}
+            </main>
         </div>
     </body>
 </html>
