@@ -15,7 +15,7 @@
     </div>
 
 </x-layout>
-<script>
+<component is="script">
     function uncheckAll() {
         document.getElementsByName('files[]').forEach(element => {
             element.checked = false;
@@ -54,4 +54,4 @@
             }
         });
     }
-</script>
+</component>
