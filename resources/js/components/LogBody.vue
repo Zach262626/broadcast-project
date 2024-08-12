@@ -54,7 +54,7 @@ onMounted(() => {
             newFile.path = e.path;
             newFile.user = e.userId;
             updateFileLog(newFile);
-            file.value.push(newFile);
+            file.value.unshift(newFile);
         });
     Echo.private('Upload.User.' + props.user_id)
         .listen('UploadStatus', (e) => {
@@ -65,7 +65,7 @@ onMounted(() => {
             newFile.status = e.status;
             newFile.user = e.userId;
             updateFileLog(newFile);
-            file.value.push(newFile);
+            file.value.unshift(newFile);
             if (e.status == 100) {
                 console.log(true);
             }
@@ -77,7 +77,27 @@ onMounted(() => {
 <template>
     <ul>
         <li v-for="item in file"> 
-            {{ item.type }} <strong>{{ item.name }}</strong> : {{ item.description }} // Time: {{ item.created_at }}.
+            <button v-if="item.path">
+                <input type='hidden' :value="item.name" name='path' id='path'>
+                <a style="color: green; text-decoration: underline;">
+                    <strong>{{ item.name }}</strong>
+                    <input type='hidden' :value="item.path" name='path' id='path'>
+                </a>
+                : {{ item.description }}. // Type: {{ item.type }}
+            </button>
+            <div v-else>
+                <strong style="color: green">{{ item.name }}</strong>
+                : {{ item.description }}. // Type: {{ item.type }}
+            </div>
         </li>
     </ul>
 </template>
+<style scoped>
+    button {
+    all: unset;
+    }
+
+    button:focus {
+    outline: revert;
+    }
+</style>
