@@ -11,7 +11,6 @@ function updateFileLog(data) {
         type: data.type,
         _token: props._token
     });
-    console.log(postData);
     $.ajax({
         type: 'POST',
         url: props.new_log_route,
@@ -32,7 +31,6 @@ function getOldLog() {
         url: props.old_log_route,
         type: 'GET',
         success: function (results) {
-            console.log(results);
             for (let i = 0; i < results.length; ++i) {
                 file.value.push(results[i]);
             }
@@ -66,9 +64,6 @@ onMounted(() => {
             newFile.user = e.userId;
             updateFileLog(newFile);
             file.value.unshift(newFile);
-            if (e.status == 100) {
-                console.log(true);
-            }
         });
 });
 
@@ -76,7 +71,7 @@ onMounted(() => {
 
 <template>
     <ul>
-        <li v-for="item in file"> 
+        <li v-for="item in file">
             <button v-if="item.path">
                 <input type='hidden' :value="item.name" name='path' id='path'>
                 <a style="color: green; text-decoration: underline;">
@@ -93,11 +88,11 @@ onMounted(() => {
     </ul>
 </template>
 <style scoped>
-    button {
+button {
     all: unset;
-    }
+}
 
-    button:focus {
+button:focus {
     outline: revert;
-    }
+}
 </style>

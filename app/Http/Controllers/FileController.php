@@ -114,6 +114,9 @@ class FileController extends Controller
     }
     /**
      * Logging File.
+     * 
+     * @param Request $request
+     * @return void
      */
     public function logFiles(Request $request)
     {
@@ -127,6 +130,9 @@ class FileController extends Controller
     }
     /**
      * Logging File.
+     * 
+     * @param Request $request
+     * @return array
      */
     public function getLogFiles(Request $request)
     {

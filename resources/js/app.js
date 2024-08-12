@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap';
-import './echo';
-import { createApp } from 'vue';
+import "./bootstrap";
+import "./echo";
+import { createApp } from "vue";
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -16,15 +16,17 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
+import UploadAlert from "./components/UploadAlert.vue";
+import DownloadAlert from "./components/DownloadAlert.vue";
+import LogBody from "./components/LogBody.vue";
+import Counter from "./components/Counter.vue";
+import CounterAlert from "./components/CounterAlert.vue";
 
-import UploadAlert from './components/UploadAlert.vue';
-import DownloadAlert from './components/DownloadAlert.vue';
-import LogBody from './components/LogBody.vue';
-
-app.component('upload-alert', UploadAlert);
-app.component('download-alert', DownloadAlert);
-
-app.component('log-body', LogBody);
+app.component("upload-alert", UploadAlert);
+app.component("download-alert", DownloadAlert);
+app.component("counter-component", Counter);
+app.component("counter-alert", CounterAlert);
+app.component("log-body", LogBody);
 
 /**
  * The following block of code may be used to automatically register your
@@ -44,4 +46,4 @@ app.component('log-body', LogBody);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');
+app.mount("#app");

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-const props = defineProps(['user_id'])
-const filename = ref("")
+const props = defineProps(['user_id']);
+const filename = ref("");
 const filepath = ref("");
 const show = ref(false);
 
@@ -39,8 +39,9 @@ onMounted(() => {
     </div>
     <div class="toast-body">
       <input type='hidden' :value="filepath" name='path' id='path'>
-      <button class="btn btn-light border" data-bs-dismiss="toast" @click="changeView(false)" type="submit">{{ filename
-        }}</button>
+      <button class="btn btn-light border" data-bs-dismiss="toast" @click="changeView(false)" type="submit">
+        {{ filename }}
+      </button>
     </div>
   </div>
 </template>
