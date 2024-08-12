@@ -48,12 +48,15 @@
             <div class="d-flex align-items-center justify-content-center py-2 border-bottom border-white">Logs</div>
             <div style="height: 300px;" class="overflow-auto">
                 <div class="h-100">
-                    <log-body
-                    user_id = "{{ auth()->user()->id }}"
-                    _token = "{{ csrf_token() }}"
-                    old_log_route = "{{ route('update-file-log') }}"
-                    new_log_route = "{{ route('old-logs') }}"
-                    ></log-body>
+                    <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <log-body
+                        user_id = "{{ auth()->user()->id }}"
+                        _token = "{{ csrf_token() }}"
+                        old_log_route = "{{ route('update-file-log') }}"
+                        new_log_route = "{{ route('old-logs') }}"
+                        ></log-body>
+                    </form>
                 </div>
             </div>
         <div>

@@ -130,6 +130,6 @@ class FileController extends Controller
      */
     public function getLogFiles(Request $request)
     {
-        return FileLog::where('user_id', Auth::id())->get();
+        return FileLog::where('user_id', Auth::id())->latest()->get();
     }
 }
