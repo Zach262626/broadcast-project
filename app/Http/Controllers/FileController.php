@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Events\DownloadStatus;
 use App\Events\UploadStatus;
 use App\Models\File;
@@ -10,21 +11,35 @@ use ZipArchive;
 class FileController extends Controller
 {
     /**
-     * retrieve files.
+     * Display a list of available downloads
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
      */
-    public function downloadIndex() {
+    public function downloadIndex(Request $request)
+    {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('files.index', ['files' => $files]);
     }
-
-    public function uploadIndex() {
+    /**
+     * Display a upload page
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function uploadIndex()
+    {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('upload', ['files' => $files]);
     }
     /**
-     * upload files.
+     * Upload a list of file to the local storage
+     *
+     * @param Request $request
+     * @return void
      */
-    public function upload(Request $request) {
+    public function upload(Request $request)
+    {
         $status = 0;
         $count = 0;
         $total = count($request->file('files'));
@@ -44,51 +59,56 @@ class FileController extends Controller
         return back();
     }
     /**
-     * download files at path.
+     * Download file from path requested
+     *
+     * @param Request $request
+     * @return void
      */
     public function download(Request $request)
     {
-        return response()->download($request['path'])->deleteFileAfterSend(true);;
+        return response()->download($request['path'])->deleteFileAfterSend(true);
     }
     /**
-     * download multiple files.
+     * Zip a list of files and stored in local storage
+     *
+     * @param Request $request
+     * @return string
      */
     public function downloadMultiple(Request $request)
-    {   
+    {
         if (!file_exists(storage_path('app/downloads/'))) {
             mkdir(storage_path('app/downloads/'));
         }
         $files_requested = $request['files'];
         $files = File::whereIn('id', $files_requested)->get();
         $zip = new ZipArchive;
-        $zipFileName =  'Attachment-' . 'files'. '.zip';
+        $zipFileName = 'Attachment-' . 'files' . '.zip';
         if ($zip->open(storage_path('app/downloads/' . $zipFileName), ZipArchive::CREATE) === true) {
-        foreach ($files as $file) {
-            $filePath = storage_path($file->path);
-            $filesToZip[] = $filePath;
-        }
-        foreach ($filesToZip as $file) {
-            $zip->addFile($file, basename('/app' . $file));
-        }
-        $zip->close();
-        DownloadStatus::dispatch($zipFileName, storage_path('app/downloads/' . $zipFileName), Auth::id());
-        return "File are zipped";
+            foreach ($files as $file) {
+                $filePath = storage_path($file->path);
+                $filesToZip[] = $filePath;
+            }
+            foreach ($filesToZip as $file) {
+                $zip->addFile($file, basename('/app' . $file));
+            }
+            $zip->close();
+            DownloadStatus::dispatch($zipFileName, storage_path('app/downloads/' . $zipFileName), Auth::id());
+            return "File are zipped";
         }
     }
     /**
-     * Get all users files.
+     * Gey the names of all the available files
+     *
+     * @param Request $request
+     * @return array $name
      */
-    public function getFiles(Request $request) {
+    public function getFiles(Request $request)
+    {
         $files = File::where('user_id', auth()->user()->id)->latest()->get();
         $names = [];
         foreach ($files as $key => $item) {
             $names[$item->id] = $item->name;
         }
         return $names;
-    }
-    public function deleteFiles(Request $request) {
-        //File::where('user_id', auth()->user()->id)->delete();
-        find(auth()->user()->id);
-        return response()->delete();
     }
 }

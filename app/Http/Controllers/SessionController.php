@@ -5,20 +5,39 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class SessionController extends Controller
 {
-    public function index() {
+    /**
+     * Display sing-up page
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
         return view('auth.signup');
     }
-    public function login() {
+    /**
+     * Display log-in page
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function login(Request $request)
+    {
         return view('auth.login');
     }
-
-    public function create(Request $request) {
+    /**
+     * Creates a new user
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function create(Request $request)
+    {
         $user = User::where('name', $request['username'])->get();
-        if (count($user)==0) {
+        if (count($user) == 0) {
             $atr = [
                 'name' => $request['username'],
             ];
@@ -27,20 +46,34 @@ class SessionController extends Controller
             //log in
             Auth::login($user);
         }
-            //redirect
+        //redirect
         return redirect('/');
     }
-    public function store(Request $request) {
-        $user = User::where('name',$request['username'])->get();
-        if (count($user)>0) {
+    /**
+     * Authorize existing user
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function store(Request $request)
+    {
+        $user = User::where('name', $request['username'])->get();
+        if (count($user) > 0) {
             Auth::login($user[0]);
         }
         request()->session()->regenerate();
         return redirect('/');
     }
-    public function destroy() {
+    /**
+     * Logout authorized user
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function destroy()
+    {
         Auth::logout();
 
         return redirect('/');
-     }
+    }
 }
