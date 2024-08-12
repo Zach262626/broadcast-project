@@ -18,7 +18,6 @@ function getOldStatus() {
     });
 }
 function deleteStatus() {
-    ;
     changeView(false)
     if (status.value == 100) {
         changeView(false)
@@ -43,7 +42,7 @@ function deleteStatus() {
 }
 function showAlert() {
     {
-        var toast = new bootstrap.Toast(document.getElementById('download-alert'));
+        var toast = new bootstrap.Toast(document.getElementById('counter-alert'));
         toast.show();
         changeView(true);
     }
@@ -82,7 +81,7 @@ onUpdated(() => {
 </script>
 
 <template>
-    <div v-show="show" class="toast bg-dark" id="download-alert" role="alert" aria-live="assertive" aria-atomic="true"
+    <div v-show="show" class="toast bg-dark" id="counter-alert" role="alert" aria-live="assertive" aria-atomic="true"
         data-bs-autohide="false">
         <div :class="{ 'bg-success': done, 'bg-danger': done == false }" class="toast-header text-white">
             <strong v-if="status == 100" class="me-auto">Count Is Complete</strong>
