@@ -38,6 +38,7 @@ function startCounter() {
     return true;
 }
 onMounted(() => {
+  statusReset();
   getOldStatus();
   Echo.private('Counter.User.' + props.user_id)
     .listen('CounterStatus', (e) => {
@@ -50,7 +51,7 @@ onMounted(() => {
 
 <template>
   <div class="mt-5 p-4 border border-3 container">
-    <div v-if="status == 0" class="row">
+    <div v-if="!status" class="row">
       <button class="btn btn-light border" @click="startCounter()" type="button">Start Count</button>
     </div>
     <div v-else class="progress mt-3" style="height: 30px;">
