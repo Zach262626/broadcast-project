@@ -61,6 +61,7 @@ onMounted(() => {
         .listen('CounterStatus', (e) => {
             status.value = e.status;
             if (status.value == 100) {
+                console.log('counter done');
                 audio.play();
             }
         });

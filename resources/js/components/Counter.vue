@@ -50,10 +50,10 @@ onMounted(() => {
 
 <template>
   <div class="mt-5 p-4 border border-3 container">
-    <div class="row">
+    <div v-if="status == 0" class="row">
       <button class="btn btn-light border" @click="startCounter()" type="button">Start Count</button>
     </div>
-    <div class="progress mt-3" style="height: 30px;">
+    <div v-if="status != 0" class="progress mt-3" style="height: 30px;">
       <div :class="{ 'bg-success': status == 100, 'bg-danger': status < 100 }" class="progress-bar fs-5" role="progressbar" :style="{ width: status + '%' }" :aria-valuenow="status"
         aria-valuemin="0" aria-valuemax="100">{{ status }}%</div>
     </div>
