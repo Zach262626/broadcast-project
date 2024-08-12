@@ -11,9 +11,10 @@ class File extends Model
 {
     use HasFactory;
     protected $table = 'files';
-    protected $fillable = ['name','path', 'user_id'];
+    protected $fillable = ['name', 'path', 'user_id'];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

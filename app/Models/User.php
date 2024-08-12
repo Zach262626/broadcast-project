@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -8,6 +7,7 @@ use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -28,7 +28,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function files() {
+    public function files()
+    {
         return $this->hasMany(File::class);
     }
 }

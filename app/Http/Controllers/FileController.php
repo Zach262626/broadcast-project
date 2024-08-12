@@ -12,21 +12,32 @@ use ZipArchive;
 class FileController extends Controller
 {
     /**
-     * retrieve files.
+     * Display a list of available downloads
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
      */
-    public function downloadIndex()
+    public function downloadIndex(Request $request)
     {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('files.index', ['files' => $files]);
     }
-
+    /**
+     * Display a upload page
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function uploadIndex()
     {
         $files = File::where('user_id', auth()->user()->id)->get();
         return view('upload', ['files' => $files]);
     }
     /**
-     * upload files.
+     * Upload a list of file to the local storage
+     *
+     * @param Request $request
+     * @return void
      */
     public function upload(Request $request)
     {
@@ -37,6 +48,7 @@ class FileController extends Controller
             $count += 1;
             $status = (($count / $total) * 100);
             UploadStatus::dispatch($file->getClientOriginalName(), $status, Auth::id());
+            sleep(1);
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             $file_created = File::create([
@@ -48,14 +60,20 @@ class FileController extends Controller
         return back();
     }
     /**
-     * download files at path.
+     * Download file from path requested
+     *
+     * @param Request $request
+     * @return void
      */
     public function download(Request $request)
     {
         return response()->download($request['path'])->deleteFileAfterSend(true);
     }
     /**
-     * download multiple files.
+     * Zip a list of files and stored in local storage
+     *
+     * @param Request $request
+     * @return string
      */
     public function downloadMultiple(Request $request)
     {
@@ -80,7 +98,10 @@ class FileController extends Controller
         }
     }
     /**
-     * Get all users files.
+     * Gey the names of all the available files
+     *
+     * @param Request $request
+     * @return array $name
      */
     public function getFilesNames(Request $request)
     {
@@ -91,7 +112,6 @@ class FileController extends Controller
         }
         return $names;
     }
-
     /**
      * Logging File.
      */

@@ -7,4 +7,4 @@
         </form>
         <a type="button" class="btn btn-dark border mt-1" href="/">Home</a>
     </div>
-</x-layout> 
+</x-layout>
