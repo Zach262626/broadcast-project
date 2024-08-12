@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Counter;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,5 +32,9 @@ class User extends Authenticatable
     public function files()
     {
         return $this->hasMany(File::class);
+    }
+    public function counts()
+    {
+        return $this->hasMany(Counter::class);
     }
 }

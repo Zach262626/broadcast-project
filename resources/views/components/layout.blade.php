@@ -40,7 +40,12 @@
         <main class="mt-5 p-4 border border-3">
             {{ $slot }}
         </main>
+        @auth
+        <form action="{{ route('start-counter') }}" method="POST">
+            @csrf
+            <counter-component user_id="{{ auth()->user()->id }}"></counter-component>
+        </form>
+        @endauth
     </div>
 </body>
-
 </html>

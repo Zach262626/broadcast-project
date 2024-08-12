@@ -20,10 +20,11 @@ const app = createApp({});
 import UploadAlert from './components/UploadAlert.vue';
 import DownloadAlert from './components/DownloadAlert.vue';
 import LogBody from './components/LogBody.vue';
+import Counter from './components/Counter.vue';
 
 app.component('upload-alert', UploadAlert);
 app.component('download-alert', DownloadAlert);
-
+app.component('counter-component', Counter);
 app.component('log-body', LogBody);
 
 /**

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-const props = defineProps(['user_id'])
-const filename = ref("")
+const props = defineProps(['user_id']);
+const filename = ref("");
 const filepath = ref("");
 const show = ref(false);
 
