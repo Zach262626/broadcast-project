@@ -92,7 +92,7 @@ class FileController extends Controller
         $count = 0;
         $status = 0;
         if ($zip->open(storage_path('app/downloads/' . $zipFileName), ZipArchive::CREATE) === true && count($files) > 0) {
-            DownloadStatus::dispatch('start', $zipFileName, 0, Auth::id());//Broadcast the start
+            DownloadStatus::dispatch('start', $zipFileName, 0, Auth::id()); //Broadcast the start
             sleep(1);
             foreach ($files as $file) {
                 $filePath = storage_path($file->path);
@@ -101,21 +101,21 @@ class FileController extends Controller
             foreach ($filesToZip as $name => $file) {
                 $zip->addFile($file, basename('/app' . $file));
                 $count += 1;
-                $status = (integer) (($count / count($files)) * 100);
+                $status = (integer) (($count / count($filesToZip)) * 100);
                 if ($status == 100) {
                     $status = 99;
                 }
-                DownloadStatus::dispatch($name, basename('/app' . $file), $status, Auth::id());//Broadcast the progress
+                DownloadStatus::dispatch($name, basename('/app' . $file), $status, Auth::id()); //Broadcast the progress
                 sleep(1);
             }
             $zip->close();
             sleep(1);
-            DownloadStatus::dispatch($zipFileName, storage_path('app/downloads/' . $zipFileName), 100, Auth::id());//Broadcast the end
+            DownloadStatus::dispatch($zipFileName, storage_path('app/downloads/' . $zipFileName), 100, Auth::id()); //Broadcast the end
             FileDownload::updateOrInsert(
-                ['user_id' => Auth::id(), 'type' => 'DownloadStatus',],
+                ['user_id' => Auth::id(), 'type' => 'DownloadStatus'],
                 ['name' => $zipFileName,
-                'status' => false,
-                'path' => storage_path('app/downloads/' . $zipFileName),]
+                    'status' => false,
+                    'path' => storage_path('app/downloads/' . $zipFileName)]
             );
             return "File are zipped";
         }
@@ -136,7 +136,7 @@ class FileController extends Controller
         }
         return $names;
     }
-      /**
+    /**
      * Get the download status from file_downloads
      *
      * @param Request $request
@@ -156,15 +156,15 @@ class FileController extends Controller
     public function deleteDownloadZip(Request $request)
     {
         FileDownload::where('user_id', auth()->user()->id)->where("type", "DownloadStatus")->delete();
-        if(file_exists($request['path'])){
+        if (file_exists($request['path'])) {
             unlink($request['path']);
         }
         return $request['path'];
-        ;
+
     }
     /**
      * Logging File.
-     * 
+     *
      * @param Request $request
      * @return void
      */
@@ -180,7 +180,7 @@ class FileController extends Controller
     }
     /**
      * Logging File.
-     * 
+     *
      * @param Request $request
      * @return array
      */

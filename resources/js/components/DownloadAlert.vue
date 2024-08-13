@@ -61,10 +61,11 @@ onMounted(() => {
   Echo.private('Download.User.' + props.user_id)
     .listen('DownloadStatus', (e) => {
       if (e.filename != 'start') {
-        files.value.push(e.filename);
+        console.log(files.status);
       } else {
         files.value = [];
       }
+      console.log(e.status);
       filename.value = e.filename;
       filepath.value = e.path;
       filestatus.value = e.status;
@@ -76,15 +77,16 @@ onMounted(() => {
 </script>
 
 <template>
+  <download-warning :data="{ 'filestatus': filestatus, 'filename': filename }" :route="props.download_status"
+    @deletedownloaded="(choice) => { if (choice) { deleteDownloaded() } }"><!--Props and Emits-->
+  </download-warning>
   <input type='hidden' :value="download" name='path' id='path'>
-  <div v-show="show" class="toast bg-dark" id="download-alert" role="alert" aria-live="assertive" aria-atomic="true"
-    data-bs-autohide="false">
+  <div v-show="show" class="toast bg-dark position-fixed end-0 bottom-0" id="download-alert" role="alert"
+    aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
     <div v-if="filestatus == 100">
       <div class="toast-header bg-success text-white">
         <strong class="me-auto">Download Is Complete</strong>
-        <download-warning :data="{ 'filestatus': filestatus, 'filename': filename }" :route="props.download_status"
-          @deletedownloaded="(choice) => { if (choice) { deleteDownloaded() } }"><!--Props and Emits-->
-        </download-warning>
+        <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
       </div>
       <div class="toast-body">
         <input type='hidden' :value="filepath" name='path' id='path'>

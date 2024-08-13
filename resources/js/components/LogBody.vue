@@ -50,7 +50,7 @@ onMounted(() => {
                 newFile.description = "The file " + e.filename + " is ready to download";
                 newFile.path = e.path;
                 newFile.type = "DownloadReady";
-            }else {
+            } else {
                 newFile.description = "The file " + e.filename + " is added to downloads";
                 newFile.type = "AddedDownload";
             }

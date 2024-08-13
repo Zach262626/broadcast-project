@@ -32,7 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-show="show" class="toast bg-dark" id="upload-alert" role="alert" aria-live="assertive" aria-atomic="true"
+  <div v-show="show" class="toast bg-dark position-fixed top-0 end-0" id="upload-alert" role="alert" aria-live="assertive" aria-atomic="true"
     data-bs-autohide="false">
     <div class="toast-header bg-success text-white">
       <strong v-if="progress < 100" class="me-auto">Uploading</strong>

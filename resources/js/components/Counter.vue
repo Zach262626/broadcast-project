@@ -18,24 +18,24 @@ function getOldStatus() {
   });
 }
 function startCounter() {
-    var postData = JSON.stringify({
-        user_id: props.user_id,
-        _token: props._token
-    });
-    $.ajax({
-        type: 'POST',
-        url: props.start_counter,
-        data: postData,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (results) {
-            status.value = results;
-        },
-        error: function (error) {
-            console.log(JSON.stringify(error));
-        }
-    });
-    return true;
+  var postData = JSON.stringify({
+    user_id: props.user_id,
+    _token: props._token
+  });
+  $.ajax({
+    type: 'POST',
+    url: props.start_counter,
+    data: postData,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (results) {
+      status.value = results;
+    },
+    error: function (error) {
+      console.log(JSON.stringify(error));
+    }
+  });
+  return true;
 }
 onMounted(() => {
   statusReset();
@@ -55,8 +55,9 @@ onMounted(() => {
       <button class="btn btn-light border" @click="startCounter()" type="button">Start Count</button>
     </div>
     <div v-else class="progress mt-3" style="height: 30px;">
-      <div :class="{ 'bg-success': status == 100, 'bg-danger': status < 100 }" class="progress-bar fs-5" role="progressbar" :style="{ width: status + '%' }" :aria-valuenow="status"
-        aria-valuemin="0" aria-valuemax="100">{{ status }}%</div>
+      <div :class="{ 'bg-success': status == 100, 'bg-danger': status < 100 }" class="progress-bar fs-5"
+        role="progressbar" :style="{ width: status + '%' }" :aria-valuenow="status" aria-valuemin="0"
+        aria-valuemax="100">{{ status }}%</div>
     </div>
   </div>
 </template>
