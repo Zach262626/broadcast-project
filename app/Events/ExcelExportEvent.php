@@ -4,22 +4,22 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UploadStatus implements ShouldBroadcast
+class ExcelExportEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(
-        public $file,
-        public $status,
-        public $userId
-    ) {
+    public function __construct()
+    {
+        //
     }
 
     /**
@@ -30,15 +30,7 @@ class UploadStatus implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("Upload.User.{$this->userId}"),
+            new PrivateChannel('channel-name'),
         ];
     }
-    /**
-     * The name of the queue on which to place the broadcasting job.
-     */
-    public function broadcastQueue(): string
-    {
-        return 'broadcast';
-    }
-
 }

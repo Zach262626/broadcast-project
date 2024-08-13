@@ -36,4 +36,11 @@ class DownloadStatus implements ShouldBroadcast
             new PrivateChannel("Download.User.{$this->userId}"),
         ];
     }
+    /**
+     * The name of the queue on which to place the broadcasting job.
+     */
+    public function broadcastQueue(): string
+    {
+        return 'broadcast';
+    }
 }
