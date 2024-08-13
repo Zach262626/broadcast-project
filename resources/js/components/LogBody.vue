@@ -1,8 +1,14 @@
 <script setup>
 import { onBeforeMount, onMounted, ref } from 'vue'
 const file = ref([])
-const props = defineProps(['user_id', '_token', 'old_log_route', 'new_log_route']);
+const props = defineProps(['user_id', '_token', 'old_log_route', 'new_log_route'])
 
+function closeLog(toggle) {
+    var myCollapse = document.getElementById('myCollapse')
+    var bsCollapse = new bootstrap.Collapse(myCollapse, {
+        toggle: toggle
+    })
+}
 // Methods
 function updateFileLog(data) {
     var postData = JSON.stringify({
@@ -75,14 +81,26 @@ onMounted(() => {
 </script>
 
 <template>
-    <ul>
-        <li v-for="item in file">
-            <div>
-                <strong style="color: green">{{ item.name }}</strong>
-                : {{ item.description }}. // Type: {{ item.type }}
+    <a @click="closeLog(true)" class="text-center w-100 btn btn-dark">toggle logs</a>
+    <div id="myCollapse" class="collapse">
+                <div class="container" id="log">
+                    <div class="px-4 border-bottom border-3">
+                        <div class="d-flex align-items-center justify-content-center py-2 border-bottom border-white">Logs</div>
+                        <div style="height: 300px;" class="overflow-auto">
+                            <div class="h-100">
+                                <ul>
+                                    <li v-for="item in file">
+                                        <div>
+                                            <strong style="color: green">{{ item.name }}</strong>
+                                            : {{ item.description }}. // Type: {{ item.type }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </li>
-    </ul>
 </template>
 <style scoped>
 button {

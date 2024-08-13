@@ -20,6 +20,24 @@
                     </a>
                 </div>
             </div>
+            <h2 class="mt-3 text-center">Excel</h2>
+            <div class="row">
+                <div class="my-1">
+                    <a href="/excel/export" type="button" class="btn btn-light w-100">
+                        <h2 class="">Export</h2>
+                    </a>
+                </div> 
+                {{-- <div class="col-md-6 my-1">
+                    <a href="/excel/export" type="button" class="btn btn-light w-100">
+                        <h2 class="">Import</h2>
+                    </a>
+                </div>
+                <div class="col-md-6 my-1">
+                    <a href="/excel/export" type="button" class="btn btn-light w-100">
+                        <h2 class="">Export</h2>
+                    </a>
+                </div> --}}
+            </div>
 
         @endauth
         @guest

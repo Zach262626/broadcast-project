@@ -25,7 +25,6 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <style>
     </style>
-
 </head>
 
 <body class="bg-dark text-white">
@@ -38,38 +37,29 @@
                     counter_status_route = "{{ route('counter_status_route') }}">
                 </counter-alert>
                 <upload-alert user_id="{{ auth()->user()->id }}"></upload-alert>
-                <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
                     <download-alert _token = "{{ csrf_token() }}"
                         download_zip_delete = "{{ route('download_zip_delete') }}"
-                        download_status = "{{ route('download_status') }}" user_id="{{ auth()->user()->id }}">
+                        download_status = "{{ route('download_status') }}" user_id="{{ auth()->user()->id }}"
+                        download_route = "{{ route('download') }}">
                     </download-alert>
-                </form>
             </div>
         @endauth
         <main class="mt-5 p-4 border border-3">
             {{ $slot }}
         </main>
         @auth
-            <div class="container mt-5" id="log">
-                <div class="px-4 border border-3">
-                    <div class="d-flex align-items-center justify-content-center py-2 border-bottom border-white">Logs</div>
-                    <div style="height: 300px;" class="overflow-auto">
-                        <div class="h-100">
-                            <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <log-body user_id = "{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
-                                    old_log_route = "{{ route('update-file-log') }}"
-                                    new_log_route = "{{ route('old-logs') }}"></log-body>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <log-body 
+                user_id = "{{ auth()->user()->id }}"
+                 _token = "{{ csrf_token() }}"
+                old_log_route = "{{ route('update-file-log') }}"
+                new_log_route = "{{ route('old-logs') }}">
+            </log-body>
         @endauth
         @auth
-            <section>
-                <counter-component user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
+            <section class="collapse">
+                <counter-component 
+                    user_id="{{ auth()->user()->id }}" 
+                    _token = "{{ csrf_token() }}"
                     counter_status_route = "{{ route('counter_status_route') }}"
                     start_counter = "{{ route('start_counter') }}">
                 </counter-component>

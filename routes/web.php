@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\CounterController;
+use App\Http\Controllers\ExcelExportController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\SessionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('index');
@@ -52,10 +54,11 @@ Route::post('/count/delete', [CounterController::class, 'deleteCounter'])->name(
 Route::get('/count/status', [CounterController::class, 'getLatestCounter'])->name('counter_status_route');
 /*
 |--------------------------------------------------------------------------
-| Export
+| Excel Export
 |--------------------------------------------------------------------------
     */
-
+Route::get('/excel/export', [ExcelExportController::class, 'index']);
+Route::get('/excel/export/users', [ExcelExportController::class, 'exportUsers']);
 
 
 
