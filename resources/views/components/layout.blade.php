@@ -23,13 +23,16 @@
     {{-- Jquery --}}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <style>
+    </style>
 
 </head>
 
 <body class="bg-dark text-white">
+    <a href="/test" class="btn btn-light border">Test Page</a>
     <div class="container" id="app">
         @auth
-            <div class="toast-container top-0 end-0 position-absolute">
+            <div class="toast-container">
                 <counter-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
                     delete_counter = "{{ route('delete_counter') }}"
                     counter_status_route = "{{ route('counter_status_route') }}">
@@ -37,7 +40,10 @@
                 <upload-alert user_id="{{ auth()->user()->id }}"></upload-alert>
                 <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <download-alert user_id="{{ auth()->user()->id }}"></download-alert>
+                    <download-alert _token = "{{ csrf_token() }}"
+                        download_zip_delete = "{{ route('download_zip_delete') }}"
+                        download_status = "{{ route('download_status') }}" user_id="{{ auth()->user()->id }}">
+                    </download-alert>
                 </form>
             </div>
         @endauth
@@ -69,7 +75,7 @@
                 </counter-component>
             </section>
         @endauth
-    <div>
+        <div>
 </body>
 
 </html>

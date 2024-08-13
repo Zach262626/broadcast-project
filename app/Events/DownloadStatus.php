@@ -19,6 +19,7 @@ class DownloadStatus implements ShouldBroadcast
     public function __construct(
         public $filename,
         public $path,
+        public $status,
         public $userId
     ) {
         //
@@ -34,5 +35,12 @@ class DownloadStatus implements ShouldBroadcast
         return [
             new PrivateChannel("Download.User.{$this->userId}"),
         ];
+    }
+    /**
+     * The name of the queue on which to place the broadcasting job.
+     */
+    public function broadcastQueue(): string
+    {
+        return 'broadcast';
     }
 }

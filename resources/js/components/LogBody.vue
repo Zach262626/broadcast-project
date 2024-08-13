@@ -46,10 +46,15 @@ onMounted(() => {
     Echo.private('Download.User.' + props.user_id)
         .listen('DownloadStatus', (e) => {
             const newFile = {};
+            if (e.status == 100) {
+                newFile.description = "The file " + e.filename + " is ready to download";
+                newFile.path = e.path;
+                newFile.type = "DownloadReady";
+            } else {
+                newFile.description = "The file " + e.filename + " is added to downloads";
+                newFile.type = "AddedDownload";
+            }
             newFile.name = e.filename;
-            newFile.description = "The file " + e.filename + " is ready to download";
-            newFile.type = "DownloadReady";
-            newFile.path = e.path;
             newFile.user = e.userId;
             updateFileLog(newFile);
             file.value.unshift(newFile);
@@ -72,15 +77,7 @@ onMounted(() => {
 <template>
     <ul>
         <li v-for="item in file">
-            <button v-if="item.path">
-                <input type='hidden' :value="item.name" name='path' id='path'>
-                <a style="color: green; text-decoration: underline;">
-                    <strong>{{ item.name }}</strong>
-                    <input type='hidden' :value="item.path" name='path' id='path'>
-                </a>
-                : {{ item.description }}. // Type: {{ item.type }}
-            </button>
-            <div v-else>
+            <div>
                 <strong style="color: green">{{ item.name }}</strong>
                 : {{ item.description }}. // Type: {{ item.type }}
             </div>

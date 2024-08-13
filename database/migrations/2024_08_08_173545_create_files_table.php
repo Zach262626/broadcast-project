@@ -19,6 +19,16 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
+        Schema::create('file_downloads', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('type');
+            $table->string('path');
+            $table->boolean('status');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
         Schema::create('files_log', function (Blueprint $table) {
             $table->id();
             $table->string('name');
