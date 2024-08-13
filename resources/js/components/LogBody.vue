@@ -46,10 +46,15 @@ onMounted(() => {
     Echo.private('Download.User.' + props.user_id)
         .listen('DownloadStatus', (e) => {
             const newFile = {};
+            if (e.status == 100) {
+                newFile.description = "The file " + e.filename + " is ready to download";
+                newFile.path = e.path;
+                newFile.type = "DownloadReady";
+            }else {
+                newFile.description = "The file " + e.filename + " is added to downloads";
+                newFile.type = "AddedDownload";
+            }
             newFile.name = e.filename;
-            newFile.description = "The file " + e.filename + " is ready to download";
-            newFile.type = "DownloadReady";
-            newFile.path = e.path;
             newFile.user = e.userId;
             updateFileLog(newFile);
             file.value.unshift(newFile);

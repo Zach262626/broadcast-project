@@ -19,6 +19,7 @@ class DownloadStatus implements ShouldBroadcast
     public function __construct(
         public $filename,
         public $path,
+        public $status,
         public $userId
     ) {
         //
