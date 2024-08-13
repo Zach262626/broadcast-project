@@ -15,15 +15,16 @@ import { createApp } from "vue";
  */
 
 const app = createApp({});
-
 import UploadAlert from "./components/UploadAlert.vue";
 import DownloadAlert from "./components/DownloadAlert.vue";
+import DownloadWarningModal from "./components/modals/DownloadWarningModal.vue";
 import LogBody from "./components/LogBody.vue";
 import Counter from "./components/Counter.vue";
 import CounterAlert from "./components/CounterAlert.vue";
 
 app.component("upload-alert", UploadAlert);
 app.component("download-alert", DownloadAlert);
+app.component("download-warning", DownloadWarningModal);
 app.component("counter-component", Counter);
 app.component("counter-alert", CounterAlert);
 app.component("log-body", LogBody);

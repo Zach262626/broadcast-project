@@ -77,15 +77,7 @@ onMounted(() => {
 <template>
     <ul>
         <li v-for="item in file">
-            <button v-if="item.path">
-                <input type='hidden' :value="item.name" name='path' id='path'>
-                <a style="color: green; text-decoration: underline;">
-                    <strong>{{ item.name }}</strong>
-                    <input type='hidden' :value="item.path" name='path' id='path'>
-                </a>
-                : {{ item.description }}. // Type: {{ item.type }}
-            </button>
-            <div v-else>
+            <div>
                 <strong style="color: green">{{ item.name }}</strong>
                 : {{ item.description }}. // Type: {{ item.type }}
             </div>

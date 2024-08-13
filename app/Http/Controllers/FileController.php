@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Events\DownloadStatus;
 use App\Events\UploadStatus;
 use App\Models\File;
+use App\Models\FileDownload;
 use App\Models\FileLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class FileController extends Controller
     public function downloadIndex(Request $request)
     {
         $files = File::where('user_id', auth()->user()->id)->get();
-        return view('files.index', ['files' => $files]);
+        return view('files.download', ['files' => $files]);
     }
     /**
      * Display a upload page
@@ -31,7 +32,7 @@ class FileController extends Controller
     public function uploadIndex()
     {
         $files = File::where('user_id', auth()->user()->id)->get();
-        return view('upload', ['files' => $files]);
+        return view('files.upload', ['files' => $files]);
     }
     /**
      * Upload a list of file to the local storage
@@ -68,6 +69,9 @@ class FileController extends Controller
      */
     public function download(Request $request)
     {
+        $file = FileDownload::where('user_id', Auth::id())->where('type', 'DownloadStatus')->firstOrFail();
+        $file->status = true;
+        $file->saveQuietly();
         return response()->download($request['path'])->deleteFileAfterSend(true);
     }
     /**
@@ -87,9 +91,9 @@ class FileController extends Controller
         $zipFileName = 'Attachment-' . 'files' . '.zip';
         $count = 0;
         $status = 0;
-        DownloadStatus::dispatch('start', $zipFileName, 0, Auth::id());//Broadcast the start
-        sleep(1);
-        if ($zip->open(storage_path('app/downloads/' . $zipFileName), ZipArchive::CREATE) === true) {
+        if ($zip->open(storage_path('app/downloads/' . $zipFileName), ZipArchive::CREATE) === true && count($files) > 0) {
+            DownloadStatus::dispatch('start', $zipFileName, 0, Auth::id());//Broadcast the start
+            sleep(1);
             foreach ($files as $file) {
                 $filePath = storage_path($file->path);
                 $filesToZip[$file->name] = $filePath;
@@ -107,8 +111,15 @@ class FileController extends Controller
             $zip->close();
             sleep(1);
             DownloadStatus::dispatch($zipFileName, storage_path('app/downloads/' . $zipFileName), 100, Auth::id());//Broadcast the end
+            FileDownload::updateOrInsert(
+                ['user_id' => Auth::id(), 'type' => 'DownloadStatus',],
+                ['name' => $zipFileName,
+                'status' => false,
+                'path' => storage_path('app/downloads/' . $zipFileName),]
+            );
             return "File are zipped";
         }
+        return "No Files Selected";
     }
     /**
      * Gey the names of all the available files
@@ -124,6 +135,32 @@ class FileController extends Controller
             $names[$item->id] = $item->name;
         }
         return $names;
+    }
+      /**
+     * Get the download status from file_downloads
+     *
+     * @param Request $request
+     * @return array $name
+     */
+    public function getDownloadStatus(Request $request)
+    {
+        $file = FileDownload::where('user_id', auth()->user()->id)->where("type", "DownloadStatus")->first();
+        return $file;
+    }
+    /**
+     * delete download status and the zip file
+     *
+     * @param Request $request
+     * @return array $name
+     */
+    public function deleteDownloadZip(Request $request)
+    {
+        FileDownload::where('user_id', auth()->user()->id)->where("type", "DownloadStatus")->delete();
+        if(file_exists($request['path'])){
+            unlink($request['path']);
+        }
+        return $request['path'];
+        ;
     }
     /**
      * Logging File.

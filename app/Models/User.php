@@ -33,6 +33,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(File::class);
     }
+    public function FileDownload()
+    {
+        return $this->hasMany(FileDownload::class);
+    }
     public function counts()
     {
         return $this->hasMany(Counter::class);
