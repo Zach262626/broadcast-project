@@ -48,7 +48,6 @@ class FileController extends Controller
             $count += 1;
             $status = (($count / $total) * 100);
             UploadStatus::dispatch($file->getClientOriginalName(), $status, Auth::id());
-            sleep(1);
             $path = $file->store('uploads');
             $path = 'app/' . $path;
             $file_created = File::create([
@@ -56,7 +55,9 @@ class FileController extends Controller
                 'path' => $path,
                 'user_id' => auth()->user()->id,
             ]);
+            sleep(1);
         }
+        sleep(2);
         return back();
     }
     /**
