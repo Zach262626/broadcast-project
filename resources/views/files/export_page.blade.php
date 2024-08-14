@@ -7,10 +7,11 @@
      </div>
      <div class="row mt-2">
         <div class="col-6">
-            <a href="/excel/export/files/all" class="btn btn-light  w-100">Export All files</a>
+            <a href="/files/export_page/files/all" class="btn btn-light  w-100">Export files Using Job</a>
         </div>
         <div class="col-6">
-            <a href="/excel/export/files" class="btn btn-light  w-100">Export My files</a>
+            <a href="/files/export_page/files" class="btn btn-light  w-100">Export  files Using Export </a>
+            <p class="text-center" style="font-size: 11px">Will only export the first 100</p>
         </div>
      </div>
     </div>

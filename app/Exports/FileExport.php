@@ -2,24 +2,32 @@
 
 namespace App\Exports;
 
+use App\Exports\Sheets\FilesTab1;
+use App\Exports\Sheets\FilesTab2;
+use App\Exports\Sheets\UsersTab;
 use App\Models\File;
-use App\Models\User;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class FileExport implements FromCollection
+class FileExport implements WithMultipleSheets
 {
-    public function __construct(User $user = null)
+    use Exportable;
+
+    protected $user;
+
+    public function __construct(protected array $param)
     {
-        $this->user = $user;
+        $this->user = $param["user"];
     }
     /**
-    * @return \Illuminate\Support\Collection
+    * 
     */
-    public function collection()
+    public function sheets(): array
     {
-        if ($this->user) {
-            return File::where('user_id', $this->user)->get();
-        }
-        return File::all();
+        return [
+            0 => new FilesTab1($this->param), 
+            1 => new FilesTab2($this->param),
+            //2 => new UsersTab(['user' => $this->user])
+        ];
     }
 }

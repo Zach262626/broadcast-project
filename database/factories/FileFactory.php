@@ -20,7 +20,7 @@ class FileFactory extends Factory
     {
         $user = User::all()->random();
         return [
-            'name' => $user->name,
+            'name' => Str::random(10),
             'path' => "this/is/a/fake/path/" . Str::random(10),
             'user_id' => $user->id,
         ];

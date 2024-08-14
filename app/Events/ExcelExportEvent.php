@@ -10,14 +10,15 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ExcelExportEvent
+ 
+class ExcelExportEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public $userId, public $status, public $exportFileName, public $tab)
     {
         //
     }
@@ -30,7 +31,7 @@ class ExcelExportEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("Export.Files.{$this->userId}"),
+            new PrivateChannel("Export.Files.User.{$this->userId}"),
         ];
     }
     /**
