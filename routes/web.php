@@ -58,7 +58,8 @@ Route::get('/count/status', [CounterController::class, 'getLatestCounter'])->nam
 |--------------------------------------------------------------------------
     */
 Route::get('/excel/export', [ExcelExportController::class, 'index']);
-Route::get('/excel/export/users', [ExcelExportController::class, 'exportUsers']);
+Route::get('/excel/export/files/all', [ExcelExportController::class, 'exportAllFiles']);
+Route::get('/excel/export/files', [ExcelExportController::class, 'exportFiles']);
 
 
 

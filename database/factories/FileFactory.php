@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class UserFactory extends Factory
+class FileFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +18,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $user = User::all()->random();
         return [
-            'name' => fake()->name(),
-            'remember_token' => Str::random(10),
+            'name' => $user->name,
+            'path' => "this/is/a/fake/path/" . Str::random(10),
+            'user_id' => $user->id,
         ];
     }
 }

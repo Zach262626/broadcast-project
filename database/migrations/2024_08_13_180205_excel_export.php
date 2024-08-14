@@ -11,7 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('excel_exports', function (Blueprint $table) {
+            $table->id();
+            $table->string('table');
+            $table->string('description');
+            $table->boolean('status');
+            $table->integer('exported_by')->unsigned();
+            $table->foreign('exported_by')->references('id')->on('users');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('file_downloads');
     }
 };
