@@ -6,7 +6,7 @@
 * Clone Project
 * copy env.example add a empty local database
 * run npm install and composer install
-* run the migration table
+* php artisan migrate:fresh and php artisan db:seed
 * run php artisan reverb:start, php artisan queue:work, npm run dev
 
 
