@@ -27,7 +27,6 @@ class FileExport implements WithMultipleSheets
         return [
             0 => new FilesTab1($this->param), 
             1 => new FilesTab2($this->param),
-            //2 => new UsersTab(['user' => $this->user])
         ];
     }
 }

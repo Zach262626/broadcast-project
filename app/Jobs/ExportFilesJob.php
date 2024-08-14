@@ -60,23 +60,26 @@ class ExportFilesJob implements ShouldQueue
         $singleRow = WriterEntityFactory::createRow($cells, $styles['header']);
         $writer->addRow($singleRow);
         //Header End
-        $files = File::select('users.name as user_name', 'files.*')
-            ->leftJoin('users', 'users.id', '=', 'files.user_id')
-            ->get();
-
-        $multipleRows = [];
-        foreach ($files as $file) {
-            $cells = [
-                WriterEntityFactory::createCell($file->user_name, $styles['header']),
-                WriterEntityFactory::createCell($file->name, $styles['content']),
-                WriterEntityFactory::createCell($file->path, $styles['content']),
-                WriterEntityFactory::createCell($file->created_at->isoFormat('Y-M-D'), $styles['content']),
-                WriterEntityFactory::createCell($file->updated_at->isoFormat('Y-M-D'), $styles['content']),
-            ];
-            $multipleRows[] = WriterEntityFactory::createRow($cells);
-        }
-        /** add multiple rows at a time */
-        $writer->addRows($multipleRows); 
+        $query = File::with(['user']);
+        $total = File::with(['user'])->count();
+        $count = 0;
+        broadcast(new ExcelExportEvent($this->user->id, 0,"Files_Export_$time.xlsx"  ,$filePath, 'all'));
+        $query->chunk(500, function ($files) use (&$writer, $styles, &$count, $total, $time, $filePath) {
+            $count += 500;
+            $multipleRows = [];
+            foreach ($files as $file) {
+                $cells = [
+                    WriterEntityFactory::createCell($file->user_name, $styles['header']),
+                    WriterEntityFactory::createCell($file->name, $styles['content']),
+                    WriterEntityFactory::createCell($file->path, $styles['content']),
+                    WriterEntityFactory::createCell($file->created_at->isoFormat('Y-M-D'), $styles['content']),
+                    WriterEntityFactory::createCell($file->updated_at->isoFormat('Y-M-D'), $styles['content']),
+                ];
+                $multipleRows[] = WriterEntityFactory::createRow($cells);
+            }
+            $writer->addRows($multipleRows); 
+            broadcast(new ExcelExportEvent($this->user->id, number_format((($count / $total) * 99.99),2),"Files_Export_$time.xlsx"  ,$filePath, 'all'));
+        });
         
         // /** Shortcut: add a row from an array of values */
         // $values = ['Carl', 'is', 'great!'];

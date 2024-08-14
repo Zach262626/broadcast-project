@@ -25,7 +25,7 @@ class ExcelExportController extends Controller
         return view('files.export_page');
     }
     /**
-     * Exports all users files
+     * Exports All files using job no matter the user (parameter is used for broadcast)
      *
      * @param Request $request
      * @return Maatwebsite\Excel\Facades\Excel
@@ -36,7 +36,7 @@ class ExcelExportController extends Controller
         return back();
     }
     /**
-     * Exports all auth user files
+     * Exports all files of both auth user and every user
      *
      * @param Request $request
      * @return Maatwebsite\Excel\Facades\Excel
@@ -55,9 +55,9 @@ class ExcelExportController extends Controller
             'increments' => 10,
             'total' => 100,//count($files),
             'count' => 0,
+            'tab' => 2,
         ];
         $storedFile = Excel::store(new FileExport($param), "files/exports/" .  $export_name, 'storage');
-        ExcelExportEvent::dispatch($param["user"]->id, 100, $export_name, "", "File Stored");
         return Excel::download(new FileExport($param), $export_name);
     }
 }
