@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\ExcelExportEvent;
 use App\Exports\FileExport;
 use App\Exports\UsersExport;
+use App\Jobs\ExportFilesJob;
 use App\Models\File;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,9 +30,10 @@ class ExcelExportController extends Controller
      * @param Request $request
      * @return Maatwebsite\Excel\Facades\Excel
      */
-    public function exportAllFiles() 
+    public function exportFilesJob() 
     {
-        return Excel::download(new FileExport, 'all.files.xlsx');
+        ExportFilesJob::dispatch(Auth::user());
+        return back();
     }
     /**
      * Exports all auth user files
@@ -58,5 +60,4 @@ class ExcelExportController extends Controller
         ExcelExportEvent::dispatch($param["user"]->id, 100, $export_name, "", "File Stored");
         return Excel::download(new FileExport($param), $export_name);
     }
-
 }

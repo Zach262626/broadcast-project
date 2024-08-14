@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 class UploadStatus implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Batchable, Dispatchable, InteractsWithSockets, SerializesModels;
     /**
      * Create a new event instance.
      */

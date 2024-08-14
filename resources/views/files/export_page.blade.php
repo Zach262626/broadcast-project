@@ -7,7 +7,7 @@
      </div>
      <div class="row mt-2">
         <div class="col-6">
-            <a href="/files/export_page/files/all" class="btn btn-light  w-100">Export files Using Job</a>
+            <a href="/files/export_page/files/job" class="btn btn-light  w-100">Export files Using Job</a>
         </div>
         <div class="col-6">
             <a href="/files/export_page/files" class="btn btn-light  w-100">Export  files Using Export </a>
