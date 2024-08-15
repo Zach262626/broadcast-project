@@ -32,6 +32,13 @@
     <div class="container" id="app">
         @auth
             <div class="toast-container">
+                <export-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}" type="ExcelJobExport" 
+                    get_export_info="{{  route('get_export_info')}}"
+                    delete_export = "{{ route('delete_export') }}"
+                    download_export = "{{ route('download_export') }}"></export-alert>
+                <export-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}" type="ExcelExport"
+                    get_export_info="{{  route('get_export_info')}}"
+                    delete_export = "{{ route('delete_export') }}"></export-alert>
                 <counter-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
                     delete_counter = "{{ route('delete_counter') }}"
                     counter_status_route = "{{ route('counter_status_route') }}">
@@ -56,7 +63,7 @@
             </log-body>
         @endauth
         @auth
-            <section class="collapse">
+            <section class="">
                 <counter-component 
                     user_id="{{ auth()->user()->id }}" 
                     _token = "{{ csrf_token() }}"

@@ -19,7 +19,7 @@ $count_page = 0;
                 if($count_page == $param['increments']){
                     $param['count'] += $param['increments'];
                     $status = (($param['count'] / $param["total"]) / $param["tab"]) * 100 * $param['current_tab'];
-                    ExcelExportEvent::dispatch($param["user"]->id, $status,  $file->name, $param['current_tab']);
+                    ExcelExportEvent::dispatch($param["user"]->id, $status,  $file->name, $file->path, 'ExcelExport');
                     $count_page = 0;
                 }else {
                     $count_page += 1;
@@ -41,7 +41,7 @@ $count_page = 0;
                     style="background-color: #ffffff; border: 1px solid #000000;word-break: break-all; text-align: center">
                     {{ $file->updated_at }}</td>
             </tr>
-            @if($param['count']==($param["total"]/$param['count'])) 
+            @if($param['count']==$param["total"]) 
                 @break
             @endif
     @endforeach

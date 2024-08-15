@@ -7,6 +7,7 @@ use App\Exports\FileExport;
 use App\Exports\UsersExport;
 use App\Jobs\ExportFilesJob;
 use App\Models\File;
+use App\Models\FileDownload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,8 @@ class ExcelExportController extends Controller
     /**
      * Exports All files using job no matter the user (parameter is used for broadcast)
      *
-     * @param Request $request
-     * @return Maatwebsite\Excel\Facades\Excel
+     * 
+     * 
      */
     public function exportFilesJob() 
     {
@@ -38,8 +39,7 @@ class ExcelExportController extends Controller
     /**
      * Exports all files of both auth user and every user
      *
-     * @param Request $request
-     * @return Maatwebsite\Excel\Facades\Excel
+     *
      */
     public function exportFiles() 
     {
@@ -58,6 +58,29 @@ class ExcelExportController extends Controller
             'tab' => 2,
         ];
         $storedFile = Excel::store(new FileExport($param), "files/exports/" .  $export_name, 'storage');
-        return Excel::download(new FileExport($param), $export_name);
+        FileDownload::updateOrInsert(
+            ['user_id' => Auth::id(), 'type' => 'ExcelExport'],
+            ['name' => $export_name,
+                'status' => false,
+                'path' => storage_path("files/exports/"  . $export_name)]
+        );
+        return Excel::download(new FileExport($param), $export_name)->deleteFileAfterSend(true);
     }
+    public function getExportInfo(Request $request) {
+        return FileDownload::where('type', $request['type'])->where('user_id', $request['user_id'])->first();
+    } 
+    public function deleteExport(Request $request) {
+        FileDownload::where('user_id', auth()->user()->id)->where("type", $request["type"])->delete();
+        if (file_exists($request['path'])) {
+            unlink($request['path']);
+            return true;
+        }
+        return false;
+    } 
+    public function downloadExport(Request $request) {
+        $file = FileDownload::where('user_id', Auth::id())->where('type', $request["type"])->firstOrFail();
+        $file->status = true;
+        $file->saveQuietly();
+        return response()->download($request['path']);
+    } 
 }

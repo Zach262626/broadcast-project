@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Events\ExcelExportEvent;
 use App\Models\File;
+use App\Models\FileDownload;
 use Box\Spout\Common\Entity\Row;
 use Box\Spout\Common\Entity\Style\Border;
 use Box\Spout\Common\Entity\Style\CellAlignment;
@@ -63,13 +64,13 @@ class ExportFilesJob implements ShouldQueue
         $query = File::with(['user']);
         $total = File::with(['user'])->count();
         $count = 0;
-        broadcast(new ExcelExportEvent($this->user->id, 0,"Files_Export_$time.xlsx"  ,$filePath, 'all'));
+        broadcast(new ExcelExportEvent($this->user->id, 0,"Files_Export_$time.xlsx"  ,$filePath,  'ExcelJobExport'));
         $query->chunk(500, function ($files) use (&$writer, $styles, &$count, $total, $time, $filePath) {
-            $count += 500;
             $multipleRows = [];
             foreach ($files as $file) {
+                $count += 1;
                 $cells = [
-                    WriterEntityFactory::createCell($file->user_name, $styles['header']),
+                    WriterEntityFactory::createCell($file->user->name, $styles['header']),
                     WriterEntityFactory::createCell($file->name, $styles['content']),
                     WriterEntityFactory::createCell($file->path, $styles['content']),
                     WriterEntityFactory::createCell($file->created_at->isoFormat('Y-M-D'), $styles['content']),
@@ -78,7 +79,7 @@ class ExportFilesJob implements ShouldQueue
                 $multipleRows[] = WriterEntityFactory::createRow($cells);
             }
             $writer->addRows($multipleRows); 
-            broadcast(new ExcelExportEvent($this->user->id, number_format((($count / $total) * 99.99),2),"Files_Export_$time.xlsx"  ,$filePath, 'all'));
+            broadcast(new ExcelExportEvent($this->user->id, number_format((($count / $total) * 99.99),2),"Files_Export_$time.xlsx"  ,$filePath,  'ExcelJobExport'));
         });
         
         // /** Shortcut: add a row from an array of values */
@@ -88,6 +89,13 @@ class ExportFilesJob implements ShouldQueue
 
         $writer->close();
         $this->notifyUser($time, $filePath);
+        FileDownload::updateOrInsert(
+            ['user_id' => $this->user->id, 'type' => 'ExcelJobExport'],
+            ['name' => "Files_Export_$time.xlsx",
+                'status' => false,
+                'path' => storage_path("app/public/temp/export/Files_Export_$time.xlsx")
+                ]
+        );
         return true;
     }
     public function styles() {  
@@ -114,6 +122,7 @@ class ExportFilesJob implements ShouldQueue
         ];
     }
     public function notifyUser($time, $filePath) {
-        broadcast(new ExcelExportEvent($this->user->id, 100,"Files_Export_$time.xlsx"  ,$filePath, 'all'));
+        
+        broadcast(new ExcelExportEvent($this->user->id, 100,"Files_Export_$time.xlsx"  ,$filePath,  'ExcelJobExport'));
     }
 }

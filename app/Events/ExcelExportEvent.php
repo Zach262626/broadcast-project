@@ -18,7 +18,7 @@ class ExcelExportEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public $userId, public $status, public $exportFileName, public $tab = "all")
+    public function __construct(public $userId, public $status, public $exportFileName, public $path, public $type)
     {
         //
     }

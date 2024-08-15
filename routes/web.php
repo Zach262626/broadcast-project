@@ -58,8 +58,11 @@ Route::get('/count/status', [CounterController::class, 'getLatestCounter'])->nam
 |--------------------------------------------------------------------------
     */
 Route::get('/files/export_page', [ExcelExportController::class, 'index']);
-Route::get('/files/export_page/files/job', [ExcelExportController::class, 'exportFilesJob']);
-Route::get('/files/export_page/files', [ExcelExportController::class, 'exportFiles']);
+Route::get('/files/export_page/files/job', [ExcelExportController::class, 'exportFilesJob'])->name('export-files-job');
+Route::get('/files/export_page/files', [ExcelExportController::class, 'exportFiles'])->name('export-files');
+Route::get('/files/export_page/get', [ExcelExportController::class, 'getExportInfo'])->name('get_export_info');
+Route::post('/files/export_page/delete', [ExcelExportController::class, 'deleteExport'])->name('delete_export');
+Route::post('/files/export_page/download', [ExcelExportController::class, 'downloadExport'])->name('download_export');
 
 
 
