@@ -1,4 +1,5 @@
-<x-layout>
+@extends('components.layout')
+@section('content')
     <div>
         <form method="POST" action="/signup">
             @csrf
@@ -7,4 +8,4 @@
         </form>
         <a type="button" class="btn btn-dark border mt-1" href="/">Home</a>
     </div>
-</x-layout>
+@endsection

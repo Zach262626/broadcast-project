@@ -25,6 +25,7 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <style>
     </style>
+    @stack('scripts')
 </head>
 
 <body class="bg-dark text-white">
@@ -52,7 +53,7 @@
             </div>
         @endauth
         <main class="mt-5 p-4 border border-3">
-            {{ $slot }}
+            @yield('content')
         </main>
         @auth
             <log-body 
@@ -73,6 +74,7 @@
             </section>
         @endauth
         <div>
+        @yield('js')
 </body>
 
 </html>

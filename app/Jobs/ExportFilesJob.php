@@ -64,7 +64,7 @@ class ExportFilesJob implements ShouldQueue
         $query = File::with(['user']);
         $total = File::with(['user'])->count();
         $count = 0;
-        broadcast(new ExcelExportEvent($this->user->id, 0,"Files_Export_$time.xlsx"  ,$filePath,  'ExcelJobExport'));
+        broadcast(new ExcelExportEvent($this->user->id, 1,"Files_Export_$time.xlsx"  ,$filePath,  'ExcelJobExport'));
         $query->chunk(500, function ($files) use (&$writer, $styles, &$count, $total, $time, $filePath) {
             $multipleRows = [];
             foreach ($files as $file) {

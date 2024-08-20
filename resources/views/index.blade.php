@@ -1,4 +1,5 @@
-<x-layout>
+@extends('components.layout')
+@section('content')
 
     @auth
         <h3>Logged in: <strong>{{ auth()->user()->name }}</strong></h3>
@@ -59,4 +60,4 @@
         @csrf
         <input type="text" name="text" value="text">
     </form> --}}
-</x-layout>
+@endsection

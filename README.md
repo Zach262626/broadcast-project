@@ -20,7 +20,7 @@
 
 ## Make a broadcast channel
 
-* To create a broadcast channel, run the command php artisan make:event "Even name"
+* To create a broadcast channel, run the command php artisan make:event "Event name"
 * Implement ShouldBroadcast to the class
 * Change channel name and navigate to channel.php. add authentication, only people with the authenticated will be able to access the channel
 

@@ -76,6 +76,10 @@ onMounted(() => {
             updateFileLog(newFile);
             file.value.unshift(newFile);
         });
+    Echo.private('Export.Files.User.' + props.user_id)
+        .listen('ExcelExportEvent', (e) => {
+            console.log(e.status)
+        });
 });
 
 </script>

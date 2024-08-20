@@ -2,13 +2,10 @@
 
 namespace App\Exports\Sheets;
 
-use App\Models\File;
-use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithTitle;
-
 
 class FilesTab2 implements FromView, WithTitle, ShouldAutoSize
 {
@@ -16,11 +13,12 @@ class FilesTab2 implements FromView, WithTitle, ShouldAutoSize
     {
         $this->param['count'] = 4;
     }
-    
+
     public function view(): View
     {
         return view('files.export.files', [
-            'param' => $this->param
+            'param' => $this->param,
+            'files' => $this->param["files"],
         ]);
     }
     /**
