@@ -14,7 +14,7 @@ class FilesTab2 implements FromView, WithTitle, ShouldAutoSize
 {
     public function __construct(protected array $param)
     {
-        $this->param['current_tab'] = 2;
+        $this->param['count'] = 4;
     }
     
     public function view(): View

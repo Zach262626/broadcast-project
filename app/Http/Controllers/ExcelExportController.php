@@ -11,6 +11,7 @@ use App\Models\FileDownload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelExportController extends Controller
@@ -52,19 +53,20 @@ class ExcelExportController extends Controller
             'user' => Auth::user(),
             'files' => $files,
             'export_name' => $export_name,
-            'increments' => 10,
-            'total' => 100,//count($files),
-            'count' => 0,
+            'export_path' => storage_path("app/storage/files/exports/"  . $export_name),
+            'count' => 1,
             'tab' => 2,
+            'max'=> 1000, //can be removed
         ];
         $storedFile = Excel::store(new FileExport($param), "files/exports/" .  $export_name, 'storage');
         FileDownload::updateOrInsert(
             ['user_id' => Auth::id(), 'type' => 'ExcelExport'],
             ['name' => $export_name,
                 'status' => false,
-                'path' => storage_path("files/exports/"  . $export_name)]
+                'path' => $param["export_path"]
+            ]
         );
-        return Excel::download(new FileExport($param), $export_name)->deleteFileAfterSend(true);
+        return response()->download($param["export_path"])->deleteFileAfterSend(true);
     }
     public function getExportInfo(Request $request) {
         return FileDownload::where('type', $request['type'])->where('user_id', $request['user_id'])->first();

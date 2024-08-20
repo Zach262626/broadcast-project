@@ -11,7 +11,7 @@
         </div>
         <div class="col-6">
             <a href="/files/export_page/files" class="btn btn-light  w-100">Export  files Using Export </a>
-            <p class="text-center" style="font-size: 11px">Will only export the first 100</p>
+            <p class="text-center" style="font-size: 11px">Will only export the first 1000 files</p>
         </div>
      </div>
     </div>

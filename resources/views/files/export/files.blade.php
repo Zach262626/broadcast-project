@@ -1,8 +1,10 @@
+@use(App\Events\ExcelExportEvent)
 @php
-use App\Events\ExcelExportEvent;
-$count_page = 0;
+    $count = 0; 
+    $status = (($param["count"] / 3) / $param["tab"]) * 100;
+    $param["count"] += 1;
+    ExcelExportEvent::dispatch($param["user"]->id, $status,  $param["export_name"], $param["export_path"], 'ExcelExport');
 @endphp
-
 <table class='table table-bordered table-striped  table-condensed mb-none' style="table-layout: auto">
     <thead>
         <tr>
@@ -16,14 +18,12 @@ $count_page = 0;
     <tbody>
         @foreach ($param['files'] as $file)
             @php
-                if($count_page == $param['increments']){
-                    $param['count'] += $param['increments'];
-                    $status = (($param['count'] / $param["total"]) / $param["tab"]) * 100 * $param['current_tab'];
+                if(($count*2) == $param['max'] ){
+                    $status = (($param["count"] / 3) / $param["tab"]) * 100;
+                    $param["count"] += 1;
                     ExcelExportEvent::dispatch($param["user"]->id, $status,  $file->name, $file->path, 'ExcelExport');
-                    $count_page = 0;
-                }else {
-                    $count_page += 1;
                 }
+                $count += 1;
             @endphp
             <tr>
                 <th style="background-color: #c0c0c0; border: 1px solid #000000; text-left; ">
@@ -41,9 +41,14 @@ $count_page = 0;
                     style="background-color: #ffffff; border: 1px solid #000000;word-break: break-all; text-align: center">
                     {{ $file->updated_at }}</td>
             </tr>
-            @if($param['count']==$param["total"]) 
+            @if($count==$param["max"]) 
                 @break
             @endif
     @endforeach
 </tbody>
 </table>
+@php
+    $status = (($param["count"] / 3) / $param["tab"]) * 100;
+    $param["count"] += 1;
+    ExcelExportEvent::dispatch($param["user"]->id, $status,  $param["export_name"], $param["export_path"], 'ExcelExport');
+@endphp
