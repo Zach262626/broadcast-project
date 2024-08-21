@@ -47,5 +47,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('files');
         Schema::dropIfExists('files_log');
+        Schema::dropIfExists('file_downloads');
     }
 };

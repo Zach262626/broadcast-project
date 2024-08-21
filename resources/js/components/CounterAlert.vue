@@ -1,9 +1,7 @@
 <script setup>
 import { onMounted, ref, onUpdated } from 'vue'
 const props = defineProps(['user_id', '_token', 'delete_counter', 'counter_status_route'])
-const show = ref(false)
-const done = ref(false)
-const status = ref(0)
+const status = ref(-1)
 const audio = new Audio('/audio/tap-notification-180637.mp3');
 function getOldStatus() {
     $.ajax({
@@ -18,9 +16,7 @@ function getOldStatus() {
     });
 }
 function deleteStatus() {
-    changeView(false)
     if (status.value == 100) {
-        changeView(false)
         var postData = JSON.stringify({
             user_id: props.user_id,
             _token: props._token
@@ -40,21 +36,6 @@ function deleteStatus() {
         });
     }
 }
-function showAlert() {
-    {
-        var toast = new bootstrap.Toast(document.getElementById('counter-alert'));
-        toast.show();
-        changeView(true);
-    }
-}
-function changeView(choice) {
-    if (choice) {
-        show.value = true;
-    } else {
-        show.value = false;
-    }
-}
-
 onMounted(() => {
     getOldStatus();
     Echo.private('Counter.User.' + props.user_id)
@@ -66,35 +47,20 @@ onMounted(() => {
             }
         });
 });
-onUpdated(() => {
-    if (status.value > 0) {
-        showAlert();
-    }
-    if (status.value == 100) {
-        done.value = true;
-    } else {
-        done.value = false;
-    }
-
-});
-
-
 </script>
 
 <template>
-    <div v-show="show" class="toast bg-dark position-fixed top-0 end-0" id="counter-alert" role="alert" aria-live="assertive" aria-atomic="true"
-        data-bs-autohide="false">
-        <div :class="{ 'bg-success': done, 'bg-danger': done == false }" class="toast-header text-white">
+    <progress-bar-toast
+        :headerClass="{'bg-success': status==100, 'bg-danger': status!=100}"
+        :contentClass="{'bg-success': status==100, 'bg-danger': status!=100}"
+        TriggerId="counter-alert"
+        :progressActive="status > 0"
+        :progress="status"
+        @closeToast="(choice) => { if (choice) { deleteStatus() } }"
+    >
+        <template #header>
             <strong v-if="status == 100" class="me-auto">Count Is Complete</strong>
             <strong v-else class="me-auto">Counting</strong>
-            <button type="button" class="btn-close" @click="deleteStatus()" data-bs-dismiss="toast"></button>
-        </div>
-        <div class="toast-body">
-            <div class="progress mt-3" style="height: 30px;">
-                <div :class="{ 'bg-success': done, 'bg-danger': done == false }" class="progress-bar fs-5"
-                    role="progressbar" :style="{ width: status + '%' }" :aria-valuenow="status" aria-valuemin="0"
-                    aria-valuemax="100">{{ status }}%</div>
-            </div>
-        </div>
-    </div>
+        </template>
+    </progress-bar-toast>
 </template>

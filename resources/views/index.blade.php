@@ -1,4 +1,5 @@
-<x-layout>
+@extends('components.layout')
+@section('content')
 
     @auth
         <h3>Logged in: <strong>{{ auth()->user()->name }}</strong></h3>
@@ -19,6 +20,23 @@
                         <h2 class="">Download Files</h2>
                     </a>
                 </div>
+            </div>
+            <div class="row">
+                <div class="my-1">
+                    <a href="/files/export_page" type="button" class="btn btn-light w-100">
+                        <h2 class="">Excel Export</h2>
+                    </a>
+                </div>
+                {{-- <div class="col-md-6 my-1">
+                    <a href="/files/export_page" type="button" class="btn btn-light w-100">
+                        <h2 class="">Import</h2>
+                    </a>
+                </div>
+                <div class="col-md-6 my-1">
+                    <a href="/files/export_page" type="button" class="btn btn-light w-100">
+                        <h2 class="">Export</h2>
+                    </a>
+                </div> --}}
             </div>
 
         @endauth
@@ -42,4 +60,4 @@
         @csrf
         <input type="text" name="text" value="text">
     </form> --}}
-</x-layout>
+@endsection

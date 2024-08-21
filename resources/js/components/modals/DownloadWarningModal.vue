@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-const props = defineProps(['data', 'route']);
 const emit = defineEmits(["deletedownloaded"]);
 </script>
 
@@ -14,12 +13,12 @@ const emit = defineEmits(["deletedownloaded"]);
     </svg>
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true" style=" color: black;">
+    <div class="modal fade" id="myModel" tabindex="-1"
+        aria-labelledby="myModel" aria-hidden="true" style=" color: black;z-index: 1500;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Cancel Download</h5>
+                    <h5 class="modal-title" id="myModel">Cancel Download</h5>
                     <button @click="emit('deletedownloads', false)" type="button" class="btn-close"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

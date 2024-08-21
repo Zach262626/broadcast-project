@@ -6,7 +6,7 @@
 * Clone Project
 * copy env.example add a empty local database
 * run npm install and composer install
-* run the migration table
+* php artisan migrate:fresh and php artisan db:seed
 * run php artisan reverb:start, php artisan queue:work, npm run dev
 
 
@@ -20,7 +20,7 @@
 
 ## Make a broadcast channel
 
-* To create a broadcast channel, run the command php artisan make:event "Even name"
+* To create a broadcast channel, run the command php artisan make:event "Event name"
 * Implement ShouldBroadcast to the class
 * Change channel name and navigate to channel.php. add authentication, only people with the authenticated will be able to access the channel
 

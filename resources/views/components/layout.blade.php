@@ -25,57 +25,57 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <style>
     </style>
-
+    @stack('scripts')
 </head>
 
 <body class="bg-dark text-white">
     <a href="/test" class="btn btn-light border">Test Page</a>
-    <div class="container" id="app">
+    <div class="container" id="app"">
         @auth
-            <div class="toast-container">
+            <div class="toast-container position-fixed bottom-0 end-0 p-4">
+                <export-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}" type="ExcelJobExport" 
+                    get_export_info="{{  route('get_export_info')}}"
+                    delete_export = "{{ route('delete_export') }}"
+                    download_export = "{{ route('download_export') }}"></export-alert>
+                <export-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}" type="ExcelExport"
+                    get_export_info="{{  route('get_export_info')}}"
+                    delete_export = "{{ route('delete_export') }}"
+                    download_export = "{{ route('download_export') }}"></export-alert>
                 <counter-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
                     delete_counter = "{{ route('delete_counter') }}"
                     counter_status_route = "{{ route('counter_status_route') }}">
                 </counter-alert>
                 <upload-alert user_id="{{ auth()->user()->id }}"></upload-alert>
-                <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
                     <download-alert _token = "{{ csrf_token() }}"
                         download_zip_delete = "{{ route('download_zip_delete') }}"
-                        download_status = "{{ route('download_status') }}" user_id="{{ auth()->user()->id }}">
+                        download_status = "{{ route('download_status') }}" user_id="{{ auth()->user()->id }}"
+                        download_route = "{{ route('download') }}">
                     </download-alert>
-                </form>
             </div>
         @endauth
         <main class="mt-5 p-4 border border-3">
-            {{ $slot }}
+            @yield('content')
         </main>
         @auth
-            <div class="container mt-5" id="log">
-                <div class="px-4 border border-3">
-                    <div class="d-flex align-items-center justify-content-center py-2 border-bottom border-white">Logs</div>
-                    <div style="height: 300px;" class="overflow-auto">
-                        <div class="h-100">
-                            <form action="{{ route('download') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <log-body user_id = "{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
-                                    old_log_route = "{{ route('update-file-log') }}"
-                                    new_log_route = "{{ route('old-logs') }}"></log-body>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <log-body 
+                user_id = "{{ auth()->user()->id }}"
+                 _token = "{{ csrf_token() }}"
+                old_log_route = "{{ route('update-file-log') }}"
+                new_log_route = "{{ route('old-logs') }}">
+            </log-body>
         @endauth
         @auth
-            <section>
-                <counter-component user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
+            <section class="">
+                <counter-component 
+                    user_id="{{ auth()->user()->id }}" 
+                    _token = "{{ csrf_token() }}"
                     counter_status_route = "{{ route('counter_status_route') }}"
                     start_counter = "{{ route('start_counter') }}">
                 </counter-component>
             </section>
         @endauth
         <div>
+        @yield('js')
 </body>
 
 </html>

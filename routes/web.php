@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\CounterController;
+use App\Http\Controllers\ExcelExportController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\SessionController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('index');
@@ -52,10 +54,15 @@ Route::post('/count/delete', [CounterController::class, 'deleteCounter'])->name(
 Route::get('/count/status', [CounterController::class, 'getLatestCounter'])->name('counter_status_route');
 /*
 |--------------------------------------------------------------------------
-| Export
+| Excel Export
 |--------------------------------------------------------------------------
     */
-
+Route::get('/files/export_page', [ExcelExportController::class, 'index']);
+Route::get('/files/export_page/files/job', [ExcelExportController::class, 'exportFilesJob'])->name('export-files-job');
+Route::get('/files/export_page/files', [ExcelExportController::class, 'exportFiles'])->name('export-files');
+Route::get('/files/export_page/get', [ExcelExportController::class, 'getExportInfo'])->name('get_export_info');
+Route::post('/files/export_page/delete', [ExcelExportController::class, 'deleteExport'])->name('delete_export');
+Route::post('/files/export_page/download', [ExcelExportController::class, 'downloadExport'])->name('download_export');
 
 
 
