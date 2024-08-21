@@ -80,6 +80,7 @@ onMounted(() => {
             <strong v-else class="me-auto">Exporting</strong>
         </template>
         <template #content>
+            <div v-if="status == 100">
                 <form :action="props.download_export" method="POST">
                     <input type="hidden" name="_token" id='_token':value="props._token">
                     <input type='hidden' :value="filepath" name='path' id='path'>
@@ -90,6 +91,7 @@ onMounted(() => {
                         Download
                     </button>
                 </form>
+            </div>
         </template>
     </progress-bar-toast>
 </template>

@@ -78,7 +78,16 @@ onMounted(() => {
         });
     Echo.private('Export.Files.User.' + props.user_id)
         .listen('ExcelExportEvent', (e) => {
-            console.log(e.status)
+            if (e.status == 100) {
+                const newFile = {};
+                newFile.name = e.exportFileName;
+                newFile.description = "The file " + e.exportFileName + " is Exported and ready for download";
+                newFile.type = e.type;
+                newFile.status = e.status;
+                newFile.user = e.userId;
+                updateFileLog(newFile);
+                file.value.unshift(newFile);
+            }
         });
 });
 
