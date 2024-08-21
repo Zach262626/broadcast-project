@@ -5,9 +5,10 @@
 
 * Clone Project
 * copy env.example add a empty local database
+* Setup virtual host
 * run npm install and composer install
 * php artisan migrate:fresh and php artisan db:seed
-* run php artisan reverb:start, php artisan queue:work, npm run dev
+* run php artisan reverb:start, php artisan queue:work, php artisan queue:work --queue=broadcast, npm run dev
 
 
 ## How to install broadcast in laravel 11
