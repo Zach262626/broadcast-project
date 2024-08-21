@@ -75,20 +75,20 @@ onMounted(() => {
 
 
 </script>
-
 <template>
-  <download-warning :data="{ 'filestatus': filestatus, 'filename': filename }" :route="props.download_status"
-    @deletedownloaded="(choice) => { if (choice) { deleteDownloaded() } }"><!--Props and Emits-->
-  </download-warning>
+    <!-- <download-warning
+      @deletedownloaded="(choice) => { if (choice) { deleteDownloaded() } }">
+    </download-warning> -->
   <form :action="props.download_route" method="POST" enctype="multipart/form-data">
     <input type='hidden' :value="download" name='path' id='path'>
     <input type="hidden" name="_token" :value="props._token">
-    <div v-show="show" class="toast bg-dark position-fixed end-0 bottom-0" id="download-alert" role="alert"
+    <div v-show="show" class="toast bg-dark" id="download-alert" role="alert"
       aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
       <div v-if="filestatus == 100">
         <div class="toast-header bg-success text-white">
           <strong class="me-auto">Download Is Complete</strong>
-          <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+          <!-- <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#myModel"></button> -->
+          <button type="button" class="btn-close" @click="deleteDownloaded()"></button>
         </div>
         <div class="toast-body">
           <input type='hidden' :value="filepath" name='path' id='path'>
@@ -117,3 +117,4 @@ onMounted(() => {
     </div>
   </form>
 </template>
+

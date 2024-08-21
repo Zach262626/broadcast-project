@@ -18,7 +18,7 @@ class FilesTab2 implements FromView, WithTitle, ShouldAutoSize
     {
         return view('files.export.files', [
             'param' => $this->param,
-            'files' => $this->param["files"],
+            'files' => $this->param["user_files"],
         ]);
     }
     /**

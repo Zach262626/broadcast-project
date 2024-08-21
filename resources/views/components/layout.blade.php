@@ -30,16 +30,17 @@
 
 <body class="bg-dark text-white">
     <a href="/test" class="btn btn-light border">Test Page</a>
-    <div class="container" id="app">
+    <div class="container" id="app"">
         @auth
-            <div class="toast-container">
+            <div class="toast-container position-fixed bottom-0 end-0 p-4">
                 <export-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}" type="ExcelJobExport" 
                     get_export_info="{{  route('get_export_info')}}"
                     delete_export = "{{ route('delete_export') }}"
                     download_export = "{{ route('download_export') }}"></export-alert>
                 <export-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}" type="ExcelExport"
                     get_export_info="{{  route('get_export_info')}}"
-                    delete_export = "{{ route('delete_export') }}"></export-alert>
+                    delete_export = "{{ route('delete_export') }}"
+                    download_export = "{{ route('download_export') }}"></export-alert>
                 <counter-alert user_id="{{ auth()->user()->id }}" _token = "{{ csrf_token() }}"
                     delete_counter = "{{ route('delete_counter') }}"
                     counter_status_route = "{{ route('counter_status_route') }}">

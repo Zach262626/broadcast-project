@@ -31,7 +31,7 @@ onUpdated(() => {
 </script>
 
 <template>
-    <div v-show="show" class="toast bg-dark position-fixed top-0 end-0" :id="TriggerId" role="alert" aria-live="assertive" aria-atomic="true"
+    <div v-show="show" class="toast bg-dark" :id="TriggerId" role="alert" aria-live="assertive" aria-atomic="true"
         data-bs-autohide="false">
         <div :class="headerClass" class="toast-header text-white">
             <slot name="header"></slot>

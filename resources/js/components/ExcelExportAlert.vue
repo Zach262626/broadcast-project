@@ -30,7 +30,7 @@ function deleteStatus() {
 }
 function getOldStatus() {
     $.ajax({
-        url: props.get_export_info,
+    url: props.get_export_info,
         type: 'GET',
         data: {
             user_id: props.user_id,
@@ -50,6 +50,7 @@ function getOldStatus() {
 }
 getOldStatus()
 onMounted(() => {
+    console.log(filepath.value)
     Echo.private('Export.Files.User.' + props.user_id)
         .listen('ExcelExportEvent', (e) => {
             if (e.type == props.type) {

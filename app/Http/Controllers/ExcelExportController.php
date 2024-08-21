@@ -71,7 +71,14 @@ class ExcelExportController extends Controller
                 'path' => $param["export_path"]
             ]
         );
-        //return response()->download($param["export_path"])->deleteFileAfterSend(true);
+        $param['count'] += 1;
+        ExcelExportEvent::dispatch(
+            $param['user']->id,
+            100,
+            $param['export_name'],
+            $param['export_path'],
+            'ExcelExport',
+        );
         return true;
     }
     /**
